@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE dataset SYSTEM "test\resources\DBUnit\bank.dtd">
+<dataset>
+    <BANK ID='1' NAME="testBank"/>
+    <CLIENT/>
+    <ACCOUNT/>
+    <ACCOUNT/>
+</dataset>
