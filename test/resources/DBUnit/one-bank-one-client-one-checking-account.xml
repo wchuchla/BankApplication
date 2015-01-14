@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE dataset SYSTEM "test\resources\DBUnit\bank.dtd">
+<dataset>
+    <BANK ID='1' NAME="testBank"/>
+    <CLIENT ID='1' NAME="First Client" GENDER="MALE" EMAIL="firstclient@gmail.com" PHONE_NUMBER="+001-123-456-789"
+            CITY="First City" INITIAL_OVERDRAFT='1000' BANK_ID='1'/>
+    <ACCOUNT ID='1' CLIENT_ID='1' ACCOUNT_NUMBER="10000002" TYPE="C" BALANCE='100' OVERDRAFT='1000'/>
+</dataset>

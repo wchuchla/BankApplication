@@ -1,0 +1,32 @@
+<!ELEMENT dataset (
+        BANK*,
+        CLIENT*,
+        ACCOUNT*)>
+
+        <!ELEMENT BANK EMPTY>
+        <!ATTLIST BANK
+                ID  ID #REQUIRED
+                NAME CDATA #REQUIRED
+                >
+
+        <!ELEMENT CLIENT EMPTY>
+        <!ATTLIST CLIENT
+                ID ID #REQUIRED
+                NAME CDATA #REQUIRED
+                GENDER (MALE|FEMALE) #REQUIRED
+                EMAIL CDATA #REQUIRED
+                PHONE_NUMBER CDATA #REQUIRED
+                CITY CDATA #REQUIRED
+                INITIAL_OVERDRAFT CDATA #REQUIRED
+                BANK_ID IDREF #REQUIRED
+                >
+
+        <!ELEMENT ACCOUNT EMPTY>
+        <!ATTLIST ACCOUNT
+                ID ID #REQUIRED
+                CLIENT_ID IDREF #REQUIRED
+                ACCOUNT_NUMBER CDATA #REQUIRED
+                TYPE (C|S) #REQUIRED
+                BALANCE CDATA #REQUIRED
+                OVERDRAFT CDATA #IMPLIED
+                >

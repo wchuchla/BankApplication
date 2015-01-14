@@ -1,0 +1,3 @@
+name=John Washington;gender=MALE;email=jwashington@gmail.com;phonenumber=+001-259-910-794;city=Dallas;initialoverdraft=1000;accounttype=checking;accountnumber=10200010;balance=100;overdraft=2000
+name=Maria Nash;gender=FEMALE;email=mnash@gmail.com;phonenumber=+001-259-205-000;city=New York;initialoverdraft=1000;accounttype=checking;balance=100;overdraft=2000
+name=John Smith;gender=MALE;email=jsmith@gmail.com;phonenumber=+001-259-212-159;city=Boston;initialoverdraft=1000;accounttype=saving;balance=100;overdraft=2000
