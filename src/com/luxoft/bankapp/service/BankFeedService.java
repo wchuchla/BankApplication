@@ -3,13 +3,14 @@ package com.luxoft.bankapp.service;
 import com.luxoft.bankapp.exception.FeedException;
 import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.validator.Validator;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BankFeedService {
 
@@ -26,7 +27,7 @@ public class BankFeedService {
 			try (LineNumberReader reader = new LineNumberReader(new FileReader(file))) {
 				proceedFile(file, reader);
 			} catch (IOException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			}
 		}
 	}
@@ -46,7 +47,7 @@ public class BankFeedService {
 		try {
 			putLine(file, reader, splittedAttributes);
 		} catch (FeedException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

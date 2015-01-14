@@ -8,8 +8,11 @@ import com.luxoft.bankapp.validator.Validator;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class DBReportCommand implements Command {
+
+	private static final Logger LOGGER = Logger.getLogger(DBReportCommand.class.getName());
 
 	@Override
 	public void execute() {

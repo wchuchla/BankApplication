@@ -11,9 +11,11 @@ import com.luxoft.bankapp.validator.Validator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 public class BankCommander {
 	private static final Scanner SCANNER;
+	private static final Logger LOGGER = Logger.getLogger(BankCommander.class.getName());
 
 	static {
 		SCANNER = new Scanner(System.in);

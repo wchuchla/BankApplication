@@ -8,54 +8,55 @@ import com.luxoft.bankapp.service.BankService;
 import com.luxoft.bankapp.validator.Validator;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBRemoveClientCommand implements Command {
 
-	private final BankService bankService;
-	private final ClientDAO clientDAO;
+    private static final Logger LOGGER = Logger.getLogger(DBRemoveClientCommand.class.getName());
+    private final BankService bankService;
+    private final ClientDAO clientDAO;
 
-	public DBRemoveClientCommand(BankService bankService, ClientDAO clientDAO) {
-		this.bankService = bankService;
-		this.clientDAO = clientDAO;
-	}
+    public DBRemoveClientCommand(BankService bankService, ClientDAO clientDAO) {
+        this.bankService = bankService;
+        this.clientDAO = clientDAO;
+    }
 
-	@Override
-	public void execute() {
-		try {
-			Scanner scanner = new Scanner(System.in);
-			String answer = removeConfirmation(scanner);
-			if ("Yes".equalsIgnoreCase(answer)) {
-				executeRemovingClient();
-			}
-		} catch (DAOException e) {
-			e.printStackTrace();
-		} catch (ClientNotExistsException e) {
-			e.getMessage();
-		}
-	}
+    @Override
+    public void execute() {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            String answer = removeConfirmation(scanner);
+            if ("Yes".equalsIgnoreCase(answer)) {
+                executeRemovingClient();
+            }
+        } catch (DAOException | ClientNotExistsException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
 
-	private String removeConfirmation(Scanner scanner) {
-		System.out.println("Are you sure to delete client "
-				+ BankCommander.activeClient.getName() + "? (Yes/yes/No/no)");
-		String answer = scanner.nextLine();
-		while (Validator.yesNoValidator(answer)) {
-			System.out.println(answer);
-			System.out.println("You entered wrong value. Please try again.");
-			answer = scanner.nextLine();
-		}
-		return answer;
-	}
+    private String removeConfirmation(Scanner scanner) {
+        System.out.println("Are you sure to delete client "
+                + BankCommander.activeClient.getName() + "? (Yes/yes/No/no)");
+        String answer = scanner.nextLine();
+        while (Validator.yesNoValidator(answer)) {
+            System.out.println(answer);
+            System.out.println("You entered wrong value. Please try again.");
+            answer = scanner.nextLine();
+        }
+        return answer;
+    }
 
-	private void executeRemovingClient() throws DAOException, ClientNotExistsException {
-		clientDAO.remove(BankCommander.activeBank, BankCommander.activeClient);
-		bankService.removeClient(BankCommander.activeBank,
-				BankCommander.activeClient.getName());
-		BankCommander.activeClient = null;
-		System.out.println("Client was successfully deleted");
-	}
+    private void executeRemovingClient() throws DAOException, ClientNotExistsException {
+        clientDAO.remove(BankCommander.activeBank, BankCommander.activeClient);
+        bankService.removeClient(BankCommander.activeBank,
+                BankCommander.activeClient.getName());
+        BankCommander.activeClient = null;
+        System.out.println("Client was successfully deleted");
+    }
 
-	@Override
-	public void printCommandInfo() {
-		System.out.print("Remove the active client");
-	}
+    @Override
+    public void printCommandInfo() {
+        System.out.print("Remove the active client");
+    }
 }

@@ -6,10 +6,13 @@ import com.luxoft.bankapp.service.server.BankServerInfo;
 import com.luxoft.bankapp.service.server.ServerThread;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class GetBankStatisticsCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
+
+	private static final Logger LOGGER = Logger.getLogger(GetBankStatisticsCommand.class.getName());
 
 	public GetBankStatisticsCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;

@@ -4,9 +4,10 @@ import com.luxoft.bankapp.exception.*;
 import com.luxoft.bankapp.model.Account;
 import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
-import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BankServiceImpl implements BankService {
 
@@ -85,7 +86,7 @@ public class BankServiceImpl implements BankService {
 				filePath))) {
 			objectOutputStream.writeObject(client);
 		} catch (IOException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -95,7 +96,7 @@ public class BankServiceImpl implements BankService {
 				filePath))) {
 			return (Client) objectInputStream.readObject();
 		} catch (ClassNotFoundException | IOException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 		return null;
 	}

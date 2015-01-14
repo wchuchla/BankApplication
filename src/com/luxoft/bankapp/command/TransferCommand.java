@@ -13,12 +13,16 @@ import com.luxoft.bankapp.validator.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TransferCommand implements Command {
 
 	private final BankService bankService;
 	private final ClientDAO clientDAO;
 	private final AccountDAO accountDAO;
+
+	private static final Logger LOGGER = Logger.getLogger(TransferCommand.class.getName());
 
 	public TransferCommand(BankService bankService, ClientDAO clientDAO, AccountDAO accountDAO) {
 		this.bankService = bankService;
@@ -43,7 +47,7 @@ public class TransferCommand implements Command {
 		try {
 			executeTransfer(amount, beneficiaryName);
 		} catch (NotEnoughFundsException | DAOException e) {
-			e.getMessage();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

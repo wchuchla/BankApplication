@@ -8,7 +8,6 @@ import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.model.enums.Gender;
 import com.luxoft.bankapp.service.BankServiceImpl;
-import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 
@@ -27,6 +28,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 	private static final String SAVE_SELECT = "SELECT ID FROM CLIENT WHERE NAME=?";
 	private static final String SAVE_UPDATE =
 			"UPDATE CLIENT SET NAME=?, GENDER=?, EMAIL=?, PHONE_NUMBER=?, CITY=?, INITIAL_OVERDRAFT=?, BANK_ID=? WHERE ID=?";
+
 	private static final Logger LOGGER = Logger.getLogger(ClientDAOImpl.class.getName());
 
 	@Override
@@ -54,14 +56,14 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 					try {
 						bankService.addAccount(client, account);
 					} catch (AccountExistsException e) {
-						LOGGER.error(e);
+						LOGGER.log(Level.SEVERE, e.getMessage(), e);
 					}
 				}
 			} else {
 				throw new ClientNotFoundException(name);
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(resultSet, statement);
@@ -93,13 +95,13 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 					try {
 						bankService.addAccount(client, account);
 					} catch (AccountExistsException e) {
-						LOGGER.error(e);
+						LOGGER.log(Level.SEVERE, e.getMessage(), e);
 					}
 				}
 				clients.add(client);
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(resultSet, statement);
@@ -141,7 +143,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 				}
 
 			} catch (SQLException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
@@ -170,7 +172,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 					accountDAO.save(client, account);
 				}
 			} catch (SQLException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
@@ -193,7 +195,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 				throw new ClientNotFoundException(client.getName());
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(statement);

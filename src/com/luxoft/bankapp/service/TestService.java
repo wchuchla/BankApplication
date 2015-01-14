@@ -5,10 +5,13 @@ import com.luxoft.bankapp.model.NoDB;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.logging.Logger;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 public class TestService {
+
+	private static final Logger LOGGER = Logger.getLogger(TestService.class.getName());
 
 	public static boolean isEquals(Object o1, Object o2) {
 

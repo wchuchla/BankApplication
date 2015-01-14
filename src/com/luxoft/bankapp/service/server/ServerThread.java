@@ -5,7 +5,6 @@ import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.service.ClientService;
 import com.luxoft.bankapp.service.server.command.*;
 import com.luxoft.bankapp.validator.Validator;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,12 +12,15 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ServerThread implements Runnable {
 
 	private static final String REMOTEOFFICE = "remoteoffice";
 	private static final String ATM = "atm";
 	private static final Logger LOGGER = Logger.getLogger(ServerThread.class.getName());
+
 	private final Bank currentBank;
 	private final ClientService clientService;
 	private String message;
@@ -35,7 +37,7 @@ public class ServerThread implements Runnable {
 			out.writeObject(object);
 			out.flush();
 		} catch (IOException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -80,7 +82,7 @@ public class ServerThread implements Runnable {
 				} while (bankServerInfo.isLogin());
 			}
 		} catch (ClassNotFoundException | NumberFormatException | IOException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		} finally {
 			BankServerThreaded.CLIENT_COUNTER.decrementAndGet();
 		}

@@ -6,15 +6,17 @@ import com.luxoft.bankapp.exception.ClientExistsException;
 import com.luxoft.bankapp.exception.ClientNotExistsException;
 import com.luxoft.bankapp.model.*;
 import com.luxoft.bankapp.model.enums.Gender;
-import org.apache.log4j.Logger;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class BankApplication {
 
 	private static final String WITHDRAW;
 	private static final String DEPOSIT;
-	private static final Logger LOGGER = Logger.getLogger(BankApplication.class.getName());
 
+	private static final Logger LOGGER = Logger.getLogger(BankApplication.class.getName());
 
 	static {
 		WITHDRAW = "withdraw";
@@ -60,7 +62,7 @@ public class BankApplication {
 			bankService.setActiveAccount(jSmith, newSavingAccount);
 			bankService.addClient(money24, jSmith);
 		} catch (IllegalArgumentException | ClientExistsException | AccountExistsException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
 		try {
@@ -73,7 +75,7 @@ public class BankApplication {
 			bankService.setActiveAccount(mJohnson, newSavingAccount);
 			bankService.addClient(money24, mJohnson);
 		} catch (IllegalArgumentException | ClientExistsException | AccountExistsException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
 		try {
@@ -84,7 +86,7 @@ public class BankApplication {
 			bankService.setActiveAccount(eWattson, newSavingAccount);
 			bankService.addClient(money24, eWattson);
 		} catch (IllegalArgumentException | ClientExistsException | AccountExistsException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
 		BankFeedService bankFeedService = new BankFeedService(money24);
@@ -97,7 +99,7 @@ public class BankApplication {
 		if (bank != null) {
 			bank.printReport();
 		} else {
-			LOGGER.warn("Bank argument is null.");
+			LOGGER.log(Level.SEVERE, "Bank argument is null");
 		}
 	}
 
@@ -113,10 +115,10 @@ public class BankApplication {
 					client.getActiveAccount().withdraw(value);
 				}
 			} catch (BankException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			}
 		} else {
-			LOGGER.warn("Some argument is null.");
+			LOGGER.log(Level.SEVERE, "Some argument is null");
 		}
 	}
 
@@ -125,12 +127,12 @@ public class BankApplication {
 			BankService bankService = new BankServiceImpl();
 			try {
 				bankService.removeClient(bank, name);
-				LOGGER.warn("Client " + name + " was successfully deleted.\n");
+				LOGGER.log(Level.INFO, "Client " + name + " was successfully deleted.\n");
 			} catch (ClientNotExistsException | IllegalArgumentException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			}
 		} else {
-			LOGGER.warn("Some argument is null.");
+			LOGGER.log(Level.SEVERE, "Some argument is null");
 		}
 	}
 

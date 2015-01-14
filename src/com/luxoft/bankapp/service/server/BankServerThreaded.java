@@ -5,7 +5,6 @@ import com.luxoft.bankapp.service.BankFeedService;
 import com.luxoft.bankapp.service.BankServiceImpl;
 import com.luxoft.bankapp.service.ClientService;
 import com.luxoft.bankapp.service.ClientServiceImpl;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,6 +12,8 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BankServerThreaded {
 	public static final int POOL_SIZE = 10;
@@ -35,7 +36,7 @@ public class BankServerThreaded {
 		try {
 			initialize();
 		} catch (IOException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
 		while (running) {
@@ -44,13 +45,13 @@ public class BankServerThreaded {
 				CLIENT_COUNTER.incrementAndGet();
 				threadPool.execute(new ServerThread(clientSocket, currentBank, clientService));
 			} catch (IOException e) {
-//				e.printStackTrace();
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			}
 		}
 		try {
 			serverSocket.close();
 		} catch (IOException e) {
-//			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

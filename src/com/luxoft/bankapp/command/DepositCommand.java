@@ -10,11 +10,15 @@ import com.luxoft.bankapp.validator.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DepositCommand implements Command {
 
 	private final BankService bankService;
 	private final AccountDAO accountDAO;
+
+	private static final Logger LOGGER = Logger.getLogger(DepositCommand.class.getName());
 
 	public DepositCommand(BankService bankService, AccountDAO accountDAO) {
 		this.bankService = bankService;
@@ -36,7 +40,7 @@ public class DepositCommand implements Command {
 		try {
 			executeDeposit(amount);
 		} catch (DAOException e) {
-			e.getMessage();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

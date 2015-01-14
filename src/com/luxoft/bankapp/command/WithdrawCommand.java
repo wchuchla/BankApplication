@@ -11,11 +11,15 @@ import com.luxoft.bankapp.validator.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WithdrawCommand implements Command {
 
 	private final BankService bankService;
 	private final AccountDAO accountDAO;
+
+	private static final Logger LOGGER = Logger.getLogger(WithdrawCommand.class.getName());
 
 	public WithdrawCommand(BankService bankService, AccountDAO accountDAO) {
 		this.bankService = bankService;
@@ -37,7 +41,7 @@ public class WithdrawCommand implements Command {
 		try {
 			executeWithdraw(amount);
 		} catch (DAOException | NotEnoughFundsException e) {
-			e.getMessage();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

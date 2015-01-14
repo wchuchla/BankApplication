@@ -3,9 +3,13 @@ package com.luxoft.bankapp.service.server.command;
 import com.luxoft.bankapp.service.server.BankServerInfo;
 import com.luxoft.bankapp.service.server.ServerThread;
 
+import java.util.logging.Logger;
+
 public class ATMCancelCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
+
+	private static final Logger LOGGER = Logger.getLogger(ATMCancelCommand.class.getName());
 
 	public ATMCancelCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;

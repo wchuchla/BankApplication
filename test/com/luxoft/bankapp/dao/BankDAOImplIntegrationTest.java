@@ -1,10 +1,7 @@
 package com.luxoft.bankapp.dao;
 
 import com.luxoft.bankapp.exception.daoexception.DAOException;
-import com.luxoft.bankapp.model.Bank;
-import com.luxoft.bankapp.model.CheckingAccount;
-import com.luxoft.bankapp.model.Client;
-import com.luxoft.bankapp.model.SavingAccount;
+import com.luxoft.bankapp.model.*;
 import com.luxoft.bankapp.service.TestService;
 import org.junit.After;
 import org.junit.Before;

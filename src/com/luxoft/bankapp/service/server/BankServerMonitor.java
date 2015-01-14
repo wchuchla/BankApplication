@@ -1,10 +1,12 @@
 package com.luxoft.bankapp.service.server;
 
-import org.apache.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BankServerMonitor implements Runnable {
 
 	private static final Logger LOGGER = Logger.getLogger(BankServerMonitor.class.getName());
+
 	private volatile boolean running = true;
 
 	@Override
@@ -19,7 +21,7 @@ public class BankServerMonitor implements Runnable {
 				System.out.println("Number of awaiting clients: " + awaitingClientCounter);
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			}
 		}
 	}

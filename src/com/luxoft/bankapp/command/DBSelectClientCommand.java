@@ -6,10 +6,14 @@ import com.luxoft.bankapp.exception.daoexception.DAOException;
 import com.luxoft.bankapp.service.BankCommander;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBSelectClientCommand implements Command {
 
 	private final ClientDAO clientDAO;
+
+	private static final Logger LOGGER = Logger.getLogger(DBSelectClientCommand.class.getName());
 
 	public DBSelectClientCommand(ClientDAO clientDAO) {
 		this.clientDAO = clientDAO;
@@ -24,9 +28,9 @@ public class DBSelectClientCommand implements Command {
 			BankCommander.activeClient = clientDAO.findClientByName(BankCommander.activeBank,
 					name);
 		} catch (ClientNotFoundException e) {
-			System.out.println(e.getMessage() + ". Try again.\n");
+			LOGGER.log(Level.WARNING, e.getMessage());
 		} catch (DAOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

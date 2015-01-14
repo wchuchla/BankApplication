@@ -6,10 +6,13 @@ import com.luxoft.bankapp.service.server.ServerThread;
 import com.luxoft.bankapp.validator.Validator;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class RemoveClientCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
+
+	private static final Logger LOGGER = Logger.getLogger(RemoveClientCommand.class.getName());
 
 	public RemoveClientCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;

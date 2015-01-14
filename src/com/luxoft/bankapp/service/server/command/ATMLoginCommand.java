@@ -6,10 +6,13 @@ import com.luxoft.bankapp.service.server.BankServerInfo;
 import com.luxoft.bankapp.service.server.ServerThread;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class ATMLoginCommand {
 
 	private final BankServerInfo bankServerInfo;
+
+	private static final Logger LOGGER = Logger.getLogger(ATMLoginCommand.class.getName());
 
 	public ATMLoginCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;

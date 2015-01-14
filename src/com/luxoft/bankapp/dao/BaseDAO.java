@@ -7,7 +7,7 @@ import java.sql.Connection;
 public interface BaseDAO {
 	Connection openConnection() throws DAOException;
 
-	void closeConnection();
+	void closeConnection() throws DAOException;
 
 	void createTables() throws DAOException;
 

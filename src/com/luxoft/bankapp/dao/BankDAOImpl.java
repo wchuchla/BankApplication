@@ -7,13 +7,14 @@ import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.model.info.BankInfo;
 import com.luxoft.bankapp.model.info.BankInfoCalc;
 import com.luxoft.bankapp.service.BankCommander;
-import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
 
@@ -22,6 +23,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
 	private static final String SAVE_SELECT = "SELECT ID FROM BANK WHERE NAME=?";
 	private static final String SAVE_UPDATE = "UPDATE BANK SET NAME=? WHERE ID=?";
 	private static final String REMOVE_DELETE = "DELETE FROM BANK WHERE name=?";
+
 	private static final Logger LOGGER = Logger.getLogger(BankDAOImpl.class.getName());
 
 	@Override
@@ -44,7 +46,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
 				throw new BankNotFoundException(name);
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(resultSet, statement);
@@ -76,7 +78,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
 					clientDAO.save(bank, client);
 				}
 			} catch (SQLException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
@@ -99,7 +101,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
 					clientDAO.save(bank, client);
 				}
 			} catch (SQLException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
@@ -120,7 +122,7 @@ public class BankDAOImpl extends BaseDAOImpl implements BankDAO {
 				throw new BankNotFoundException(bank.getName());
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(statement);

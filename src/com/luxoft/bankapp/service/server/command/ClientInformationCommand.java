@@ -7,10 +7,13 @@ import com.luxoft.bankapp.service.server.BankServerInfo;
 import com.luxoft.bankapp.service.server.ServerThread;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class ClientInformationCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
+
+	private static final Logger LOGGER = Logger.getLogger(ClientInformationCommand.class.getName());
 
 	public ClientInformationCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;

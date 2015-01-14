@@ -10,11 +10,15 @@ import com.luxoft.bankapp.service.BankService;
 import com.luxoft.bankapp.validator.Validator;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AddAccountCommand implements Command {
 
 	private final BankService bankService;
 	private final AccountDAO accountDAO;
+
+	private static final Logger LOGGER = Logger.getLogger(AddAccountCommand.class.getName());
 
 	public AddAccountCommand(BankService bankService, AccountDAO accountDAO) {
 		this.bankService = bankService;
@@ -31,9 +35,9 @@ public class AddAccountCommand implements Command {
 				addCheckingAccount();
 			}
 		} catch (AccountExistsException e) {
-			System.out.println(e.getMessage());
-		} catch (DAOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.WARNING, e.getMessage());
+		} catch(DAOException e){
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

@@ -5,13 +5,14 @@ import com.luxoft.bankapp.model.Account;
 import com.luxoft.bankapp.model.CheckingAccount;
 import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.model.SavingAccount;
-import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 
@@ -22,6 +23,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 			"UPDATE ACCOUNT SET CLIENT_ID=?, ACCOUNT_NUMBER=?, TYPE=?, BALANCE=?, OVERDRAFT=? WHERE ID=?";
 	private static final String REMOVE_BY_CLIENT_ID_DELETE = "DELETE FROM ACCOUNT WHERE CLIENT_ID=?";
 	private static final String GET_CLIENTS_ACCOUNTS_SELECT = "SELECT * FROM ACCOUNT WHERE CLIENT_ID=?";
+
 	private static final Logger LOGGER = Logger.getLogger(AccountDAOImpl.class.getName());
 
 	@Override
@@ -53,7 +55,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 				resultSet.next();
 				account.setId(resultSet.getInt("ID"));
 			} catch (SQLException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
@@ -79,7 +81,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 					throw new DAOException();
 				}
 			} catch (SQLException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
@@ -98,7 +100,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 			statement.setInt(1, idClient);
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(statement);
@@ -134,7 +136,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 				}
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(resultSet, statement);

@@ -4,16 +4,17 @@ import com.luxoft.bankapp.dao.BankDAO;
 import com.luxoft.bankapp.exception.daoexception.BankNotFoundException;
 import com.luxoft.bankapp.exception.daoexception.DAOException;
 import com.luxoft.bankapp.service.BankCommander;
-import org.apache.log4j.Logger;
 
 import java.util.Scanner;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBSelectBankCommand implements Command {
 
-	private static final Logger LOGGER = Logger.getLogger(DBSelectBankCommand.class.getName());
-
 	private final BankDAO bankDAO;
 
+	private static final Logger LOGGER = Logger.getLogger(DBSelectBankCommand.class.getName());
 	public DBSelectBankCommand(BankDAO bankDAO) {
 		this.bankDAO = bankDAO;
 	}
@@ -28,9 +29,9 @@ public class DBSelectBankCommand implements Command {
 			getBank(name);
 
 		} catch (BankNotFoundException e) {
-			LOGGER.info(e.getMessage() + ". Try again.\n");
+			LOGGER.log(Level.WARNING, e.getMessage());
 		} catch (DAOException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

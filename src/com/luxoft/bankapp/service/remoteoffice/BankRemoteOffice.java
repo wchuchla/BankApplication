@@ -6,7 +6,6 @@ import com.luxoft.bankapp.model.info.CheckingAccountInfo;
 import com.luxoft.bankapp.model.info.ClientInfo;
 import com.luxoft.bankapp.model.info.SavingAccountInfo;
 import com.luxoft.bankapp.validator.Validator;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,6 +13,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BankRemoteOffice implements Runnable {
 	private static final String CLIENT_TYPE = "remoteoffice";
@@ -21,9 +22,10 @@ public class BankRemoteOffice implements Runnable {
 	private static final String SERVER = "localhost";
 	private static final String CLOSE_CONNECTION = "Thank you for use our services.\nPress enter to close connection.";
 	private static final Scanner SCANNER = new Scanner(System.in);
-	private static final Logger LOGGER = Logger.getLogger(BankRemoteOffice.class.getName());
 	private Object object;
 	private String message;
+
+	private static final Logger LOGGER = Logger.getLogger(BankRemoteOffice.class.getName());
 
 	public static void main(String args[]) {
 		BankRemoteOffice client = new BankRemoteOffice();
@@ -54,13 +56,11 @@ public class BankRemoteOffice implements Runnable {
 						throw new ClassNotFoundException();
 					}
 				} catch (ClassNotFoundException e) {
-					System.err.println("Data received in unknown format");
+					LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				}
 			} while (!message.equals(CLOSE_CONNECTION));
-		} catch (UnknownHostException e) {
-			System.err.println("You are trying to connect to an unknown host!");
 		} catch (IOException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -247,7 +247,7 @@ public class BankRemoteOffice implements Runnable {
 			out.writeObject(object);
 			out.flush();
 		} catch (IOException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 }

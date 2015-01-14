@@ -5,10 +5,13 @@ import com.luxoft.bankapp.service.server.ServerThread;
 import com.luxoft.bankapp.validator.Validator;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class ATMContinueCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
+
+	private static final Logger LOGGER = Logger.getLogger(ATMContinueCommand.class.getName());
 
 	public ATMContinueCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;

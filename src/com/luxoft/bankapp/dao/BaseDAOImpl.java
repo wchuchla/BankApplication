@@ -1,17 +1,19 @@
 package com.luxoft.bankapp.dao;
 
 import com.luxoft.bankapp.exception.daoexception.DAOException;
-import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BaseDAOImpl implements BaseDAO {
 	private static final String CONNECTION = "jdbc:h2:tcp://localhost/~/BankDB";
 	private static final String LOGIN = "admin";
 	private static final String PASSWORD = "admin";
 	private static final String DRIVER = "org.h2.Driver";
-	private static final Logger LOGGER = Logger.getLogger(BaseDAOImpl.class.getName());
 	Connection connection;
+
+	private static final Logger LOGGER = Logger.getLogger(BaseDAOImpl.class.getName());
 
 	@Override
 	public Connection openConnection() throws DAOException {
@@ -21,37 +23,39 @@ public class BaseDAOImpl implements BaseDAO {
 					PASSWORD);
 			return connection;
 		} catch (ClassNotFoundException | SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		}
 	}
 
 	@Override
-	public void closeConnection() {
+	public void closeConnection() throws DAOException {
 		try {
 			connection.close();
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			throw new DAOException();
 		}
 	}
 
-	public void close(ResultSet resultSet, Statement statement) {
+	public void close(ResultSet resultSet, Statement statement) throws DAOException {
 		if (resultSet != null) {
 			try {
 				resultSet.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				throw new DAOException();
 			}
 		}
 		close(statement);
 	}
 
-	public void close(Statement statement) {
+	public void close(Statement statement) throws DAOException {
 		try {
 			statement.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			throw new DAOException();		}
 	}
 
 	@Override
@@ -89,7 +93,7 @@ public class BaseDAOImpl implements BaseDAO {
 					"\tREFERENCES CLIENT(ID)\n" +
 					");");
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(statement);
@@ -109,7 +113,7 @@ public class BaseDAOImpl implements BaseDAO {
 			statement.execute("DROP TABLE BANK;");
 
 		} catch (SQLException e) {
-			LOGGER.error(e);
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(statement);
