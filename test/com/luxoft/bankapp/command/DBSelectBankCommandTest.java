@@ -31,17 +31,15 @@ import static org.mockito.Mockito.when;
 public class DBSelectBankCommandTest {
 
     private DBSelectBankCommand sut;
-    private List<Client> testClients;
-    private List<Account> testAccounts;
 
     @Mock
     private BankDAO bankDAOMock;
 
     @Before
     public void setUp() throws DAOException {
-        testClients = new ArrayList<>();
+        List<Client> testClients = new ArrayList<>();
         testClients.add(newClient());
-        testAccounts = new ArrayList<>();
+        List<Account> testAccounts = new ArrayList<>();
         testAccounts.add(newSavingAccount());
         BankCommander.activeBank = null;
 

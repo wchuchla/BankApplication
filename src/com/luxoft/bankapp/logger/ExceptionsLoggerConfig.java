@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-/**
- * Created by wchuchla on 2015-01-15.
- */
 public class ExceptionsLoggerConfig {
 
     public ExceptionsLoggerConfig() {
