@@ -17,8 +17,6 @@ public class AddAccountCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(AddAccountCommand.class.getName());
-
 	public AddAccountCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

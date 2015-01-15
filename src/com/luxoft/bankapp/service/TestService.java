@@ -5,13 +5,14 @@ import com.luxoft.bankapp.model.NoDB;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 public class TestService {
 
-	private static final Logger LOGGER = Logger.getLogger(TestService.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + TestService.class.getName());
 
 	public static boolean isEquals(Object o1, Object o2) {
 
@@ -65,7 +66,7 @@ public class TestService {
 				try {
 					map.put(f.getName(), f.get(obj));
 				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				}
 			}
 		}
@@ -83,7 +84,7 @@ public class TestService {
 				try {
 					map.put(f.getName(), f.get(obj));
 				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				}
 			}
 		}

@@ -13,7 +13,7 @@ public class BaseDAOImpl implements BaseDAO {
 	private static final String DRIVER = "org.h2.Driver";
 	Connection connection;
 
-	private static final Logger LOGGER = Logger.getLogger(BaseDAOImpl.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + BaseDAOImpl.class.getName());
 
 	@Override
 	public Connection openConnection() throws DAOException {
@@ -23,7 +23,7 @@ public class BaseDAOImpl implements BaseDAO {
 					PASSWORD);
 			return connection;
 		} catch (ClassNotFoundException | SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		}
 	}
@@ -33,7 +33,7 @@ public class BaseDAOImpl implements BaseDAO {
 		try {
 			connection.close();
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		}
 	}
@@ -43,7 +43,7 @@ public class BaseDAOImpl implements BaseDAO {
 			try {
 				resultSet.close();
 			} catch (SQLException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				throw new DAOException();
 			}
 		}
@@ -54,7 +54,7 @@ public class BaseDAOImpl implements BaseDAO {
 		try {
 			statement.close();
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();		}
 	}
 
@@ -93,7 +93,7 @@ public class BaseDAOImpl implements BaseDAO {
 					"\tREFERENCES CLIENT(ID)\n" +
 					");");
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(statement);
@@ -113,7 +113,7 @@ public class BaseDAOImpl implements BaseDAO {
 			statement.execute("DROP TABLE BANK;");
 
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(statement);

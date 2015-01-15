@@ -11,6 +11,6 @@ public class NotEnoughFundsException extends BankException {
 	@Override
 	public String getMessage() {
 		return "There are no enough funds on your account. You exceeded your balance by " + amount
-				+ ".\n";
+				+ ".";
 	}
 }

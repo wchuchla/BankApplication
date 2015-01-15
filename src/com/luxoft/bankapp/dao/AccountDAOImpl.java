@@ -24,13 +24,15 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 	private static final String REMOVE_BY_CLIENT_ID_DELETE = "DELETE FROM ACCOUNT WHERE CLIENT_ID=?";
 	private static final String GET_CLIENTS_ACCOUNTS_SELECT = "SELECT * FROM ACCOUNT WHERE CLIENT_ID=?";
 
-	private static final Logger LOGGER = Logger.getLogger(AccountDAOImpl.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + AccountDAOImpl.class.getName());
+	private static final Logger DB_LOGGER = Logger.getLogger("LogDB." + AccountDAOImpl.class.getName());
 
 	@Override
 	public void save(Client client, Account account) throws DAOException {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		if (account.getId() == 0) {
+			DB_LOGGER.log(Level.INFO, "BankDB.ACCOUNT: Saving the account");
 			try {
 				openConnection();
 				statement = connection.prepareStatement(SAVE_INSERT);
@@ -55,13 +57,15 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 				resultSet.next();
 				account.setId(resultSet.getInt("ID"));
 			} catch (SQLException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				DB_LOGGER.log(Level.SEVERE, "BankDB.ACCOUNT: An error occurred when saving the account ", e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
 				closeConnection();
 			}
 		} else {
+			DB_LOGGER.log(Level.INFO, "BankDB.ACCOUNT: Updating the account");
 			try {
 				openConnection();
 				statement = connection.prepareStatement(SAVE_UPDATE);
@@ -81,7 +85,8 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 					throw new DAOException();
 				}
 			} catch (SQLException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				DB_LOGGER.log(Level.SEVERE, "BankDB.ACCOUNT: An error occurred when updating the account ", e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
@@ -91,16 +96,19 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public void removeByClientId(int idClient) throws DAOException {
+	public void removeByClientId(int clientId) throws DAOException {
+		DB_LOGGER.log(Level.INFO, "BankDB.ACCOUNT: Removing all account's of the client. Client's ID: " + clientId);
 		String delete = REMOVE_BY_CLIENT_ID_DELETE;
 		PreparedStatement statement = null;
 		try {
 			openConnection();
 			statement = connection.prepareStatement(delete);
-			statement.setInt(1, idClient);
+			statement.setInt(1, clientId);
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			DB_LOGGER.log(Level.SEVERE, "BankDB.ACCOUNT: An error occurred when removing all accounts of the client. "
+					+ "Client's ID: " + clientId, e);
 			throw new DAOException();
 		} finally {
 			close(statement);
@@ -109,7 +117,8 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public List<Account> getClientAccounts(int idClient) throws DAOException {
+	public List<Account> getClientAccounts(int clientId) throws DAOException {
+		DB_LOGGER.log(Level.INFO, "BankDB.ACCOUNT: Getting all accounts of the client. Client's ID: " + clientId);
 		List<Account> accounts = new ArrayList<>();
 		String select = GET_CLIENTS_ACCOUNTS_SELECT;
 		PreparedStatement statement = null;
@@ -117,7 +126,7 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 		try {
 			openConnection();
 			statement = connection.prepareStatement(select);
-			statement.setInt(1, idClient);
+			statement.setInt(1, clientId);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				if ("S".equals(resultSet.getString("TYPE"))) {
@@ -136,7 +145,9 @@ public class AccountDAOImpl extends BaseDAOImpl implements AccountDAO {
 				}
 			}
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			DB_LOGGER.log(Level.SEVERE, "BankDB.ACCOUNT: An error occurred when getting all accounts of the client. " +
+					"Client's ID: " + clientId, e);
 			throw new DAOException();
 		} finally {
 			close(resultSet, statement);

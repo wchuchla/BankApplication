@@ -5,6 +5,11 @@ import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.service.ClientService;
 import com.luxoft.bankapp.service.server.command.*;
 import com.luxoft.bankapp.validator.Validator;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,14 +20,17 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static org.joda.time.format.DateTimeFormat.mediumDateTime;
+
 public class ServerThread implements Runnable {
 
 	private static final String REMOTEOFFICE = "remoteoffice";
 	private static final String ATM = "atm";
-	private static final Logger LOGGER = Logger.getLogger(ServerThread.class.getName());
-
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + ServerThread.class.getName());
+	private static final Logger CLIENTS_LOGGER = Logger.getLogger("LogClients." + ServerThread.class.getName());
 	private final Bank currentBank;
 	private final ClientService clientService;
+	private DateTime connectionTime;
 	private String message;
 	private Socket clientSocket = null;
 
@@ -37,7 +45,7 @@ public class ServerThread implements Runnable {
 			out.writeObject(object);
 			out.flush();
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -62,6 +70,7 @@ public class ServerThread implements Runnable {
 			commandsInitialization(atmCommandsMap, remoteOfficeCommandsMap, bankServerInfo);
 
 			message = (String) in.readObject();
+			logConnectionTime();
 			if (message.equals(ATM)) {
 				do {
 					do {
@@ -82,10 +91,37 @@ public class ServerThread implements Runnable {
 				} while (bankServerInfo.isLogin());
 			}
 		} catch (ClassNotFoundException | NumberFormatException | IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		} finally {
+			logDisconnectionTime();
 			BankServerThreaded.CLIENT_COUNTER.decrementAndGet();
 		}
+	}
+
+	private void logConnectionTime() {
+		DateTimeFormatter formatter = mediumDateTime();
+		connectionTime = new DateTime();
+		CLIENTS_LOGGER.log(Level.INFO, "User connected to the Bank Server"
+				+ "\nConnection time: " + formatter.print(connectionTime));
+	}
+
+	private void logDisconnectionTime() {
+		DateTimeFormatter dateTimeFormatter = mediumDateTime();
+		PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
+				.appendDays()
+				.appendSuffix(" day", " days")
+				.appendSeparator(" ")
+				.appendHours()
+				.appendSeparator(":")
+				.appendMinutes().minimumPrintedDigits(2)
+				.appendSeparator(":")
+				.appendSeconds().minimumPrintedDigits(2)
+				.toFormatter();
+		DateTime disconnectionTime = new DateTime();
+		Period period = new Period(connectionTime, disconnectionTime);
+		CLIENTS_LOGGER.log(Level.INFO, "User disconnected from the Bank Server" +
+				"\nDisconnection time: " + dateTimeFormatter.print(disconnectionTime)
+				+ "\nConnection duration: " + periodFormatter.print(period));
 	}
 
 	private Client noActiveClientService(BankServerInfo bankServerInfo) throws ClassNotFoundException, IOException {

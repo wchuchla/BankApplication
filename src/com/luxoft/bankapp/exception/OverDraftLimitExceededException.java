@@ -12,6 +12,6 @@ public class OverDraftLimitExceededException extends NotEnoughFundsException {
 	@Override
 	public String getMessage() {
 		return "There are no enough funds on your account. The overdraft is exceeded by " + amount
-				+ ". Your maximum amount is " + maxAmount + ".\n";
+				+ ". Your maximum amount is " + maxAmount + ".";
 	}
 }

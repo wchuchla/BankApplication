@@ -16,7 +16,7 @@ public class BankApplication {
 	private static final String WITHDRAW;
 	private static final String DEPOSIT;
 
-	private static final Logger LOGGER = Logger.getLogger(BankApplication.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + BankApplication.class.getName());
 
 	static {
 		WITHDRAW = "withdraw";
@@ -61,8 +61,8 @@ public class BankApplication {
 			bankService.addAccount(jSmith, newSavingAccount);
 			bankService.setActiveAccount(jSmith, newSavingAccount);
 			bankService.addClient(money24, jSmith);
-		} catch (IllegalArgumentException | ClientExistsException | AccountExistsException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+		} catch (ClientExistsException | AccountExistsException e) {
+			EXCEPTIONS_LOGGER.log(Level.WARNING, e.getMessage());
 		}
 
 		try {
@@ -75,7 +75,7 @@ public class BankApplication {
 			bankService.setActiveAccount(mJohnson, newSavingAccount);
 			bankService.addClient(money24, mJohnson);
 		} catch (IllegalArgumentException | ClientExistsException | AccountExistsException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
 		try {
@@ -85,8 +85,8 @@ public class BankApplication {
 			bankService.addAccount(eWattson, newSavingAccount);
 			bankService.setActiveAccount(eWattson, newSavingAccount);
 			bankService.addClient(money24, eWattson);
-		} catch (IllegalArgumentException | ClientExistsException | AccountExistsException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+		} catch (ClientExistsException | AccountExistsException e) {
+			EXCEPTIONS_LOGGER.log(Level.WARNING, e.getMessage());
 		}
 
 		BankFeedService bankFeedService = new BankFeedService(money24);
@@ -99,7 +99,7 @@ public class BankApplication {
 		if (bank != null) {
 			bank.printReport();
 		} else {
-			LOGGER.log(Level.SEVERE, "Bank argument is null");
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, "Bank argument is null");
 		}
 	}
 
@@ -115,10 +115,10 @@ public class BankApplication {
 					client.getActiveAccount().withdraw(value);
 				}
 			} catch (BankException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			}
 		} else {
-			LOGGER.log(Level.SEVERE, "Some argument is null");
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, "Some argument is null");
 		}
 	}
 
@@ -127,12 +127,12 @@ public class BankApplication {
 			BankService bankService = new BankServiceImpl();
 			try {
 				bankService.removeClient(bank, name);
-				LOGGER.log(Level.INFO, "Client " + name + " was successfully deleted.\n");
-			} catch (ClientNotExistsException | IllegalArgumentException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				EXCEPTIONS_LOGGER.log(Level.INFO, "Client " + name + " was successfully deleted.\n");
+			} catch (ClientNotExistsException e) {
+				EXCEPTIONS_LOGGER.log(Level.WARNING, e.getMessage());
 			}
 		} else {
-			LOGGER.log(Level.SEVERE, "Some argument is null");
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, "Some argument is null");
 		}
 	}
 

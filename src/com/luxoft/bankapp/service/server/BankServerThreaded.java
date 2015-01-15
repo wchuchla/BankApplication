@@ -60,7 +60,6 @@ public class BankServerThreaded {
 		feedService.loadFeed();
 		int port = 2004;
 		serverSocket = new ServerSocket(port);
-		serverSocket.setSoTimeout(20);
 		threadPool = Executors.newFixedThreadPool(POOL_SIZE);
 		monitorThread.setDaemon(true);
 		monitorThread.start();

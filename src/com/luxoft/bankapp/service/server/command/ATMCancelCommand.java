@@ -9,8 +9,6 @@ public class ATMCancelCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(ATMCancelCommand.class.getName());
-
 	public ATMCancelCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

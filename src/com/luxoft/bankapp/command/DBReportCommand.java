@@ -12,8 +12,6 @@ import java.util.logging.Logger;
 
 public class DBReportCommand implements Command {
 
-	private static final Logger LOGGER = Logger.getLogger(DBReportCommand.class.getName());
-
 	@Override
 	public void execute() {
 		Scanner scanner = new Scanner(System.in);

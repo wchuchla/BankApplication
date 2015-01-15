@@ -1,11 +1,11 @@
 package com.luxoft.bankapp.command;
 
 import com.luxoft.bankapp.dao.BankDAO;
+import com.luxoft.bankapp.exception.AccountExistsException;
 import com.luxoft.bankapp.exception.daoexception.BankNotFoundException;
 import com.luxoft.bankapp.exception.daoexception.DAOException;
 import com.luxoft.bankapp.service.BankCommander;
 
-import java.util.Scanner;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +14,7 @@ public class DBSelectBankCommand implements Command {
 
 	private final BankDAO bankDAO;
 
-	private static final Logger LOGGER = Logger.getLogger(DBSelectBankCommand.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + DBSelectBankCommand.class.getName());
 	public DBSelectBankCommand(BankDAO bankDAO) {
 		this.bankDAO = bankDAO;
 	}
@@ -28,10 +28,10 @@ public class DBSelectBankCommand implements Command {
 
 			getBank(name);
 
-		} catch (BankNotFoundException e) {
-			LOGGER.log(Level.WARNING, e.getMessage());
+		} catch (BankNotFoundException | AccountExistsException e) {
+			System.out.println(e.getMessage() + " Please try again.");
 		} catch (DAOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -40,7 +40,7 @@ public class DBSelectBankCommand implements Command {
 		return scanner.nextLine();
 	}
 
-	private void getBank(String name) throws DAOException {
+	private void getBank(String name) throws DAOException, AccountExistsException {
 		BankCommander.activeBank = bankDAO.getBankByName(name);
 	}
 

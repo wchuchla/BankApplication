@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class DBRemoveClientCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(DBRemoveClientCommand.class.getName());
+    private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + DBRemoveClientCommand.class.getName());
     private final BankService bankService;
     private final ClientDAO clientDAO;
 
@@ -30,8 +30,10 @@ public class DBRemoveClientCommand implements Command {
             if ("Yes".equalsIgnoreCase(answer)) {
                 executeRemovingClient();
             }
-        } catch (DAOException | ClientNotExistsException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        } catch(ClientNotExistsException e) {
+            System.out.println(e.getMessage());
+        } catch (DAOException e) {
+            EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

@@ -12,6 +12,6 @@ public class BankNotFoundException extends DAOException {
 
 	@Override
 	public String getMessage() {
-		return "Bank " + name + " not found";
+		return "Bank " + name + " not found.";
 	}
 }

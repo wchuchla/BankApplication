@@ -29,10 +29,12 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 	private static final String SAVE_UPDATE =
 			"UPDATE CLIENT SET NAME=?, GENDER=?, EMAIL=?, PHONE_NUMBER=?, CITY=?, INITIAL_OVERDRAFT=?, BANK_ID=? WHERE ID=?";
 
-	private static final Logger LOGGER = Logger.getLogger(ClientDAOImpl.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + ClientDAOImpl.class.getName());
+	private static final Logger DB_LOGGER = Logger.getLogger("LogDB." + ClientDAOImpl.class.getName());
 
 	@Override
-	public Client findClientByName(Bank bank, String name) throws DAOException {
+	public Client findClientByName(Bank bank, String name) throws DAOException, AccountExistsException {
+		DB_LOGGER.log(Level.INFO, "BankDB.CLIENT: Getting the client by his name. Client's name: " + name);
 		Client client = new Client(name);
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -53,17 +55,15 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 				List<Account> accounts = accountDAO.getClientAccounts(client.getId());
 				BankServiceImpl bankService = new BankServiceImpl();
 				for (Account account : accounts) {
-					try {
-						bankService.addAccount(client, account);
-					} catch (AccountExistsException e) {
-						LOGGER.log(Level.SEVERE, e.getMessage(), e);
-					}
+					bankService.addAccount(client, account);
 				}
 			} else {
+				DB_LOGGER.log(Level.WARNING, "BankDB.CLIENT: Unable to get client. Client " + name + " not found.");
 				throw new ClientNotFoundException(name);
 			}
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			DB_LOGGER.log(Level.SEVERE, "BankDB.CLIENT: An error occurred when getting the client " + name, e);
 			throw new DAOException();
 		} finally {
 			close(resultSet, statement);
@@ -73,7 +73,8 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 	}
 
 	@Override
-	public List<Client> getAllClients(Bank bank) throws DAOException {
+	public List<Client> getAllClients(Bank bank) throws DAOException, AccountExistsException {
+		DB_LOGGER.log(Level.INFO, "BankDB.CLIENT: Getting all clients of the bank. Bank's name: " + bank.getName());
 		List<Client> clients = new ArrayList<>();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -92,16 +93,14 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 				List<Account> accounts = accountDAO.getClientAccounts(client.getId());
 				BankServiceImpl bankService = new BankServiceImpl();
 				for (Account account : accounts) {
-					try {
-						bankService.addAccount(client, account);
-					} catch (AccountExistsException e) {
-						LOGGER.log(Level.SEVERE, e.getMessage(), e);
-					}
+					bankService.addAccount(client, account);
 				}
 				clients.add(client);
 			}
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			DB_LOGGER.log(Level.SEVERE, "BankDB.CLIENT: An error occurred when getting all client's. Bank name: " +
+					bank.getName(), e);
 			throw new DAOException();
 		} finally {
 			close(resultSet, statement);
@@ -115,6 +114,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		if (client.getId() == 0) {
+			DB_LOGGER.log(Level.INFO, "BankDB.CLIENT: Saving the client. Client's name: " + client.getName());
 			try {
 				openConnection();
 				statement = connection.prepareStatement(SAVE_INSERT);
@@ -143,13 +143,16 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 				}
 
 			} catch (SQLException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				DB_LOGGER.log(Level.SEVERE, "BankDB.CLIENT: An error occurred when saving the client "
+						+ client.getName(),	e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
 				closeConnection();
 			}
 		} else {
+			DB_LOGGER.log(Level.INFO, "BankDB.CLIENT: Updating the client. Client's name: " + client.getName());
 			try {
 				openConnection();
 				statement = connection.prepareStatement(SAVE_UPDATE);
@@ -172,7 +175,9 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 					accountDAO.save(client, account);
 				}
 			} catch (SQLException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				DB_LOGGER.log(Level.SEVERE, "BankDB.CLIENT: An error occurred when updating the client "
+						+ client.getName(), e);
 				throw new DAOException();
 			} finally {
 				close(resultSet, statement);
@@ -183,6 +188,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 
 	@Override
 	public void remove(Bank bank, Client client) throws DAOException {
+		DB_LOGGER.log(Level.INFO, "BankDB.CLIENT: Removing the client. Client's name: " + client.getName());
 		PreparedStatement statement = null;
 		try {
 			openConnection();
@@ -195,7 +201,7 @@ public class ClientDAOImpl extends BaseDAOImpl implements ClientDAO {
 				throw new ClientNotFoundException(client.getName());
 			}
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			throw new DAOException();
 		} finally {
 			close(statement);

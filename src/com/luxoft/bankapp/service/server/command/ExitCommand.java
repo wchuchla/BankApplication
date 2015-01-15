@@ -10,8 +10,6 @@ public class ExitCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(ExitCommand.class.getName());
-
 	public ExitCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

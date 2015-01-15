@@ -12,8 +12,6 @@ public class GetBankStatisticsCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(GetBankStatisticsCommand.class.getName());
-
 	public GetBankStatisticsCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

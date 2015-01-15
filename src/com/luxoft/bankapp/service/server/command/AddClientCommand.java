@@ -13,8 +13,6 @@ public class AddClientCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(AddClientCommand.class.getName());
-
 	public AddClientCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

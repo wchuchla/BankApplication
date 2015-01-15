@@ -10,7 +10,7 @@ public class ClientNotFoundException extends DAOException {
 
 	@Override
 	public String getMessage() {
-		return "Client " + name + " not found";
+		return "Client " + name + " not found.";
 	}
 
 }

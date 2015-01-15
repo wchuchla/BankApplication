@@ -19,7 +19,7 @@ public class WithdrawCommand implements Command {
 	private final BankService bankService;
 	private final AccountDAO accountDAO;
 
-	private static final Logger LOGGER = Logger.getLogger(WithdrawCommand.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + WithdrawCommand.class.getName());
 
 	public WithdrawCommand(BankService bankService, AccountDAO accountDAO) {
 		this.bankService = bankService;
@@ -40,8 +40,10 @@ public class WithdrawCommand implements Command {
 
 		try {
 			executeWithdraw(amount);
-		} catch (DAOException | NotEnoughFundsException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+		} catch (NotEnoughFundsException e) {
+			System.out.println(e.getMessage());
+		} catch (DAOException e) {
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

@@ -18,7 +18,7 @@ public class DepositCommand implements Command {
 	private final BankService bankService;
 	private final AccountDAO accountDAO;
 
-	private static final Logger LOGGER = Logger.getLogger(DepositCommand.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + DepositCommand.class.getName());
 
 	public DepositCommand(BankService bankService, AccountDAO accountDAO) {
 		this.bankService = bankService;
@@ -40,7 +40,7 @@ public class DepositCommand implements Command {
 		try {
 			executeDeposit(amount);
 		} catch (DAOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

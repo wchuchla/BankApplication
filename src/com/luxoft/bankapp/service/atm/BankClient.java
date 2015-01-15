@@ -17,7 +17,7 @@ public class BankClient implements Runnable {
     private static final String SERVER = "localhost";
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    private static final Logger LOGGER = Logger.getLogger(BankClient.class.getName());
+    private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + BankClient.class.getName());
 
     private String message;
 
@@ -46,11 +46,11 @@ public class BankClient implements Runnable {
                         throw new ClassNotFoundException();
                     }
                 } catch (ClassNotFoundException e) {
-                    LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                    EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
                 }
             } while (!message.equals(CLOSE_CONNECTION));
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -59,7 +59,7 @@ public class BankClient implements Runnable {
             out.writeObject(msg);
             out.flush();
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 }

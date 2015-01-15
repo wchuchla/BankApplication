@@ -13,8 +13,6 @@ public class ClientInformationCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(ClientInformationCommand.class.getName());
-
 	public ClientInformationCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

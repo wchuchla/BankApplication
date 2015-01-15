@@ -25,7 +25,7 @@ public class BankRemoteOffice implements Runnable {
 	private Object object;
 	private String message;
 
-	private static final Logger LOGGER = Logger.getLogger(BankRemoteOffice.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + BankRemoteOffice.class.getName());
 
 	public static void main(String args[]) {
 		BankRemoteOffice client = new BankRemoteOffice();
@@ -56,11 +56,11 @@ public class BankRemoteOffice implements Runnable {
 						throw new ClassNotFoundException();
 					}
 				} catch (ClassNotFoundException e) {
-					LOGGER.log(Level.SEVERE, e.getMessage(), e);
+					EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				}
 			} while (!message.equals(CLOSE_CONNECTION));
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -247,7 +247,7 @@ public class BankRemoteOffice implements Runnable {
 			out.writeObject(object);
 			out.flush();
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 }

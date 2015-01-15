@@ -12,8 +12,6 @@ public class ATMGetBalanceCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(ATMGetBalanceCommand.class.getName());
-
 	public ATMGetBalanceCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

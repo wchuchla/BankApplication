@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 public class BankFeedService {
 
-	private static final Logger LOGGER = Logger.getLogger(BankFeedService.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + BankFeedService.class.getName());
 	private final Bank activeBank;
 
 	public BankFeedService(Bank activeBank) {
@@ -27,7 +27,7 @@ public class BankFeedService {
 			try (LineNumberReader reader = new LineNumberReader(new FileReader(file))) {
 				proceedFile(file, reader);
 			} catch (IOException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			}
 		}
 	}
@@ -47,7 +47,7 @@ public class BankFeedService {
 		try {
 			putLine(file, reader, splittedAttributes);
 		} catch (FeedException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

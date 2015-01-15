@@ -23,7 +23,42 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/AddAccountCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/AddClientCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/DBRemoveClientCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/DBReportCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/DBSelectBankCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/DBSelectClientCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/DepositCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/ExitCommand.java">
           <value>
             <set />
           </value>
@@ -33,12 +68,72 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/GetAccountsCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/TransferCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/command/WithdrawCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/dao/AccountDAOImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/dao/BankDAOImpl.java">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/dao/BaseDAOImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/dao/ClientDAOImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/exception/ClientExistsException.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/exception/ClientNotExistsException.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/exception/NotEnoughFundsException.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/exception/OverDraftLimitExceededException.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/exception/daoexception/BankNotFoundException.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/exception/daoexception/ClientNotFoundException.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/logger/ConfigLoggers.java">
           <value>
             <set />
           </value>
@@ -54,6 +149,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/model/Client.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/model/NoDB.java">
           <value>
             <set />
           </value>
@@ -78,7 +178,102 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/BankServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/TestService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/atm/BankClient.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/remoteoffice/BankRemoteOffice.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/BankServerThreaded.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/ServerThread.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/ATMCancelCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/ATMContinueCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/ATMDepositCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/ATMGetBalanceCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/ATMLoginCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/ATMWithdrawalCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/AddAccountCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/AddClientCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/ClientInformationCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/ContinueCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/ExitCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/GetBankStaticticsCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/GetBankStatisticsCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/service/server/command/RemoveClientCommand.java">
           <value>
             <set />
           </value>
@@ -89,6 +284,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/test/BankServerThreadedTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/luxoft/bankapp/validator/Validator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/resources/properties/logger_all.properties">
           <value>
             <set />
           </value>
@@ -153,6 +358,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/test/com/luxoft/bankapp/model/info/SavingAccountInfoTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/test/com/luxoft/bankapp/service/TestServiceTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/test/com/luxoft/bankapp/unitTestHelper/dao/DataSets.java">
           <value>
             <set />
@@ -199,6 +414,21 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/test/resources/one-bank-one-client">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../JRunner/src/Reflection/AnnotationTutor.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../JRunner/src/Reflection/ClassSpyTutor.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../JRunner/src/Reflection/ReflectionTutor.java">
           <value>
             <set />
           </value>

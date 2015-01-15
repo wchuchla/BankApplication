@@ -12,8 +12,6 @@ public class RemoveClientCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(RemoveClientCommand.class.getName());
-
 	public RemoveClientCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

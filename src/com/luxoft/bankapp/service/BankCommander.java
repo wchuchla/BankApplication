@@ -7,15 +7,20 @@ import com.luxoft.bankapp.dao.ClientDAOImpl;
 import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.validator.Validator;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static org.joda.time.format.DateTimeFormat.mediumDateTime;
 
 public class BankCommander {
 	private static final Scanner SCANNER;
-	private static final Logger LOGGER = Logger.getLogger(BankCommander.class.getName());
+	private static final Logger CLIENTS_LOGGER = Logger.getLogger("LogClients." + BankCommander.class.getName());
 
 	static {
 		SCANNER = new Scanner(System.in);
@@ -37,14 +42,17 @@ public class BankCommander {
 	private static final Map<String, Command> COMMANDS;
 	public static Bank activeBank;
 	public static Client activeClient;
+	public static DateTime connectionTime;
 
 	private BankCommander() {
 
 	}
 
 	public static void main(String[] args) {
+		logConnectionTime();
 		while (true) {
 			while (activeBank == null) {
+				showNoActiveBankMenu();
 				noActiveBankService();
 			}
 			while (activeClient == null) {
@@ -56,12 +64,35 @@ public class BankCommander {
 		}
 	}
 
+	private static void logConnectionTime() {
+		DateTimeFormatter formatter = mediumDateTime();
+		connectionTime = new DateTime();
+		CLIENTS_LOGGER.log(Level.INFO, "User connected to the Bank Commander"
+				+ "\nConnection time: " + formatter.print(connectionTime));
+	}
+
+	private static void showNoActiveBankMenu() {
+		System.out.println("\nBank Commander Menu:");
+		System.out.print("00) ");
+		COMMANDS.get("00").printCommandInfo();
+		System.out.print("\n10) ");
+		COMMANDS.get("10").printCommandInfo();
+		System.out.println();
+		System.out.println("\nWrite a command number: ");
+	}
+
 	private static void noActiveBankService() {
-		System.out.println("Bank Commander Menu: \nPlease select active bank\n");
-		COMMANDS.get("00").execute();
+		String command;
+		command = SCANNER.nextLine();
+		while (!Validator.noActiveBankCommandValidator(command)) {
+			System.out.println("You entered invalid command number. Please try again.");
+			command = SCANNER.nextLine();
+		}
+		COMMANDS.get(command).execute();
 	}
 
 	private static void showNoActiveClientMenu() {
+		System.out.println("\nBank Commander Menu\nCurrent bank: " + activeBank.getName());
 		System.out.print("00) ");
 		COMMANDS.get("00").printCommandInfo();
 		System.out.print("\n01) ");
@@ -87,7 +118,7 @@ public class BankCommander {
 	}
 
 	private static void showActiveClientMenu() {
-		System.out.println("Bank Commander Menu\nCurrent bank: " + activeBank.getName()
+		System.out.println("\nBank Commander Menu\nCurrent bank: " + activeBank.getName()
 				+ "\nCurrent client: " + activeClient.getName());
 
 		for (String commandNumber : COMMANDS.keySet()) {

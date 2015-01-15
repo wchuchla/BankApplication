@@ -11,8 +11,6 @@ public class ContinueCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(ContinueCommand.class.getName());
-
 	public ContinueCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

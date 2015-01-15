@@ -12,8 +12,6 @@ public class ATMLoginCommand {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(ATMLoginCommand.class.getName());
-
 	public ATMLoginCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

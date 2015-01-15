@@ -2,7 +2,9 @@ package com.luxoft.bankapp.command;
 
 import com.luxoft.bankapp.dao.AccountDAO;
 import com.luxoft.bankapp.dao.ClientDAO;
+import com.luxoft.bankapp.exception.AccountExistsException;
 import com.luxoft.bankapp.exception.NotEnoughFundsException;
+import com.luxoft.bankapp.exception.daoexception.ClientNotFoundException;
 import com.luxoft.bankapp.exception.daoexception.DAOException;
 import com.luxoft.bankapp.model.Account;
 import com.luxoft.bankapp.model.Client;
@@ -22,7 +24,7 @@ public class TransferCommand implements Command {
 	private final ClientDAO clientDAO;
 	private final AccountDAO accountDAO;
 
-	private static final Logger LOGGER = Logger.getLogger(TransferCommand.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + TransferCommand.class.getName());
 
 	public TransferCommand(BankService bankService, ClientDAO clientDAO, AccountDAO accountDAO) {
 		this.bankService = bankService;
@@ -46,8 +48,10 @@ public class TransferCommand implements Command {
 
 		try {
 			executeTransfer(amount, beneficiaryName);
-		} catch (NotEnoughFundsException | DAOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+		} catch (NotEnoughFundsException | ClientNotFoundException | AccountExistsException e) {
+			System.out.println(e.getMessage());
+		} catch (DAOException e) {
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -99,7 +103,7 @@ public class TransferCommand implements Command {
 		return beneficiaryName;
 	}
 
-	private void executeTransfer(String amount, String beneficiaryName) throws NotEnoughFundsException, DAOException {
+	private void executeTransfer(String amount, String beneficiaryName) throws NotEnoughFundsException, DAOException, AccountExistsException {
 		Client beneficiary = clientDAO.findClientByName(BankCommander.activeBank, beneficiaryName);
 		bankService.transfer(BankCommander.activeClient.getActiveAccount(),
 				beneficiary.getActiveAccount(), Float.parseFloat(amount));

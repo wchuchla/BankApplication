@@ -1,5 +1,6 @@
 package com.luxoft.bankapp.dao;
 
+import com.luxoft.bankapp.exception.AccountExistsException;
 import com.luxoft.bankapp.exception.daoexception.DAOException;
 import com.luxoft.bankapp.model.*;
 import com.luxoft.bankapp.service.TestService;
@@ -41,7 +42,7 @@ public class BankDAOImplIntegrationTest {
 
 	// test save()
 	@Test
-	public void testInsert() throws IllegalAccessException, DAOException {
+	public void testInsert() throws IllegalAccessException, DAOException, AccountExistsException {
 		sut.save(bank);
 
 		Bank bank2 = sut.getBankByName(BANK_NAME);
@@ -50,7 +51,7 @@ public class BankDAOImplIntegrationTest {
 	}
 
 	@Test
-	public void testUpdate() throws DAOException, IllegalAccessException {
+	public void testUpdate() throws DAOException, IllegalAccessException, AccountExistsException {
 		sut.save(bank);
 
 		// Make changes to Bank

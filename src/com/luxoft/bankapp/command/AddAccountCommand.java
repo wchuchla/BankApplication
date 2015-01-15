@@ -18,7 +18,7 @@ public class AddAccountCommand implements Command {
 	private final BankService bankService;
 	private final AccountDAO accountDAO;
 
-	private static final Logger LOGGER = Logger.getLogger(AddAccountCommand.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + AddAccountCommand.class.getName());
 
 	public AddAccountCommand(BankService bankService, AccountDAO accountDAO) {
 		this.bankService = bankService;
@@ -35,9 +35,9 @@ public class AddAccountCommand implements Command {
 				addCheckingAccount();
 			}
 		} catch (AccountExistsException e) {
-			LOGGER.log(Level.WARNING, e.getMessage());
+			System.out.println(e.getMessage());
 		} catch(DAOException e){
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 

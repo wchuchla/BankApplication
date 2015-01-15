@@ -7,8 +7,6 @@ import java.util.logging.Logger;
 
 public class GetAccountsCommand implements Command {
 
-	private static final Logger LOGGER = Logger.getLogger(GetAccountsCommand.class.getName());
-
 	@Override
 	public void execute() {
 		int i = 0;

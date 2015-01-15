@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class AddClientCommand implements Command {
 
-    private static final Logger LOGGER = Logger.getLogger(AddClientCommand.class.getName());
+    private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + AddClientCommand.class.getName());
     private final BankService bankService;
     private final ClientDAO clientDAO;
 
@@ -44,9 +44,9 @@ public class AddClientCommand implements Command {
         try {
             executeAddingClient(name, gender, email, phoneNumber, city, initialOverdraft);
         } catch (ClientExistsException e) {
-            LOGGER.log(Level.WARNING, e.getMessage());
+            System.out.println(e.getMessage());
         } catch (DAOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

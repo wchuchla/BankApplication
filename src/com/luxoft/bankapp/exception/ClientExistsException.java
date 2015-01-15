@@ -10,6 +10,6 @@ public class ClientExistsException extends BankException {
 
 	@Override
 	public String getMessage() {
-		return "There is already client with name " + name;
+		return "There is already client with name " + name + ".";
 	}
 }

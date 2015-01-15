@@ -75,8 +75,12 @@ public class Validator {
 		return command.matches("^[0][0-9]$|^[1][0]$");
 	}
 
+	public static boolean noActiveBankCommandValidator(String command) {
+		return command.matches("^00$|10$");
+	}
+
 	public static boolean noActiveClientCommandValidator(String command) {
-		return command.matches("^[0][0-2]$|^(09)$|^[1][0]$");
+		return command.matches("^[0][0-2]$|^09$|^[1][0]$");
 	}
 
 	public static boolean dbReportCommandValidator(String command) {

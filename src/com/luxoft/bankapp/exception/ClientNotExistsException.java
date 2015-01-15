@@ -10,6 +10,6 @@ public class ClientNotExistsException extends BankException {
 
 	@Override
 	public String getMessage() {
-		return "Client " + name + " not found";
+		return "Client " + name + " not found.";
 	}
 }

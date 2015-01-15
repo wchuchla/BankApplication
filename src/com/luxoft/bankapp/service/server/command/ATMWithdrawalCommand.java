@@ -13,8 +13,6 @@ public class ATMWithdrawalCommand implements Command {
 
 	private final BankServerInfo bankServerInfo;
 
-	private static final Logger LOGGER = Logger.getLogger(ATMWithdrawalCommand.class.getName());
-
 	public ATMWithdrawalCommand(BankServerInfo bankServerInfo) {
 		this.bankServerInfo = bankServerInfo;
 	}

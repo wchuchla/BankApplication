@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class BankServiceImpl implements BankService {
 
-	private static final Logger LOGGER = Logger.getLogger(BankServiceImpl.class.getName());
+	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + BankServiceImpl.class.getName());
 
 	@Override
 	public void addClient(Bank bank, Client client) throws ClientExistsException {
@@ -86,7 +86,7 @@ public class BankServiceImpl implements BankService {
 				filePath))) {
 			objectOutputStream.writeObject(client);
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class BankServiceImpl implements BankService {
 				filePath))) {
 			return (Client) objectInputStream.readObject();
 		} catch (ClassNotFoundException | IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 		return null;
 	}
