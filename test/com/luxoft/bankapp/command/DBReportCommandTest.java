@@ -13,13 +13,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.newCheckingAccount;
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.newSecondCheckingAccount;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newClient;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newSecondClient;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.newSavingAccount;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.newSecondSavingAccount;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.newCheckingAccount;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.newSecondCheckingAccount;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newClient;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newSecondClient;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.newSavingAccount;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.newSecondSavingAccount;
 import static org.junit.Assert.assertEquals;
 
 public class DBReportCommandTest {
@@ -64,7 +64,7 @@ public class DBReportCommandTest {
     // test execute()
     @Test
     public void testBankNameInExecute() {
-        final String EXPECTED_STRING = MENU + "Bank name: " + testBank.getName() + ANOTHER_OPERATION;
+        final String expectedString = MENU + "Bank name: " + testBank.getName() + ANOTHER_OPERATION;
 
         String input = "0" + "\r\n" + "no" + "\r\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
@@ -75,13 +75,13 @@ public class DBReportCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("execute() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
     @Test
     public void testNumberOfClientsInExecute() {
         int numberOfClients = BankInfoCalc.calcNumberOfClients(testBank);
-        final String EXPECTED_STRING = MENU + "Number of clients: " + numberOfClients + ANOTHER_OPERATION;
+        final String expectedString = MENU + "Number of clients: " + numberOfClients + ANOTHER_OPERATION;
 
         String input = "1" + "\r\n" + "no" + "\r\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
@@ -92,13 +92,13 @@ public class DBReportCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("execute() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
     @Test
     public void testNumberOfAccountsInExecute() {
         int numberOfAccounts = BankInfoCalc.calcNumberOfAccounts(testBank);
-        final String EXPECTED_STRING = MENU + "Number of accounts: " + numberOfAccounts
+        final String expectedString = MENU + "Number of accounts: " + numberOfAccounts
                 + ANOTHER_OPERATION;
 
         String input = "2" + "\r\n" + "no" + "\r\n";
@@ -110,12 +110,12 @@ public class DBReportCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("execute() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
     @Test
     public void testListOfClientsInExecute() {
-        final String EXPECTED_STRING = MENU + "List of clients: \r\n" + testClient.getName() + "\r\n"
+        final String expectedString = MENU + "List of clients: \r\n" + testClient.getName() + "\r\n"
                 + testClient2.getName() + ANOTHER_OPERATION;
 
         String input = "3" + "\r\n" + "no" + "\r\n";
@@ -127,13 +127,13 @@ public class DBReportCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("execute() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
     @Test
     public void testSumOfDepositInExecute() {
         float sumOfDeposit = BankInfoCalc.calcDepositSum(testBank);
-        final String EXPECTED_STRING = MENU + "Sum of deposits: " + sumOfDeposit
+        final String expectedString = MENU + "Sum of deposits: " + sumOfDeposit
                 + ANOTHER_OPERATION;
 
         String input = "4" + "\r\n" + "no" + "\r\n";
@@ -145,13 +145,13 @@ public class DBReportCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("execute() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
     @Test
     public void testSumOfCreditInExecute() {
         float sumOfCredit = BankInfoCalc.calcCreditSum(testBank);
-        final String EXPECTED_STRING = MENU + "Sum of credits: " + sumOfCredit
+        final String expectedString = MENU + "Sum of credits: " + sumOfCredit
                 + ANOTHER_OPERATION;
 
         String input = "5" + "\r\n" + "no" + "\r\n";
@@ -163,12 +163,12 @@ public class DBReportCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("execute() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
     @Test
     public void testListOfClientsByCityInExecute() {
-        final String EXPECTED_STRING = MENU + "List of clients by city: \r\n" + testClient.getCity() + ": " + testClient
+        final String expectedString = MENU + "List of clients by city: \r\n" + testClient.getCity() + ": " + testClient
                 .getName() + ", \r\n" + testClient2.getCity() + ": " + testClient2.getName() + ", " + ANOTHER_OPERATION;
 
         String input = "6" + "\r\n" + "no" + "\r\n";
@@ -180,13 +180,13 @@ public class DBReportCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("execute() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
     // test execute()
     @Test
     public void testBankNameInExecuteWithTypos() {
-        final String EXPECTED_STRING = MENU + INVALID_OPERATION + "Bank name: " + testBank.getName()
+        final String expectedString = MENU + INVALID_OPERATION + "Bank name: " + testBank.getName()
                 + ANOTHER_OPERATION + "n\r\n" + INVALID_CONFIRMATION;
 
         String input = "9" + "\r\n" + "0" + "\r\n" + "n" + "\r\n" + "no" + "\r\n";
@@ -198,14 +198,14 @@ public class DBReportCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("execute() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
 
     // test printCommandInfo()
     @Test
     public void testPrintCommandInfo() {
-        final String EXPECTED_STRING = "Print bank info";
+        final String expectedString = "Print bank info";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -213,6 +213,6 @@ public class DBReportCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("printCommandInfo() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 }

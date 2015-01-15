@@ -7,7 +7,6 @@ import com.luxoft.bankapp.exception.daoexception.DAOException;
 import com.luxoft.bankapp.model.Bank;
 import com.luxoft.bankapp.model.Client;
 import com.luxoft.bankapp.service.BankCommander;
-import com.luxoft.bankapp.service.BankService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +18,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.*;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -32,9 +31,6 @@ public class DBSelectClientCommandTest {
     private DBSelectClientCommand sut;
     private Bank testBank;
     private Client testClient;
-
-    @Mock
-    private BankService bankServiceMock;
 
     @Mock
     private ClientDAO clientDAOMock;
@@ -87,7 +83,7 @@ public class DBSelectClientCommandTest {
     // test printCommandInfo()
     @Test
     public void testPrintCommandInfo() {
-        final String EXPECTED_STRING = "Select the active client";
+        final String expectedString = "Select the active client";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -95,7 +91,7 @@ public class DBSelectClientCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("printCommandInfo() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
 }

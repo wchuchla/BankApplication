@@ -12,14 +12,14 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.*;
 import static org.junit.Assert.assertEquals;
 
 public class CheckingAccountTest {
     private CheckingAccount sut;
 
     @Before
-    public void createCheckingAccountWithBalance0AndOverdraft100() {
+    public void setUp() {
         sut = newCheckingAccount();
     }
 
@@ -103,8 +103,8 @@ public class CheckingAccountTest {
     // test CheckingAccount(CheckingAccountInfo info)
     @Test
     public void testConstructorFromInfo() {
-        CheckingAccountInfo CheckingAccountInfo = new CheckingAccountInfo(sut);
-        Account sut2 = new CheckingAccount(CheckingAccountInfo);
+        CheckingAccountInfo checkingAccountInfo = new CheckingAccountInfo(sut);
+        Account sut2 = new CheckingAccount(checkingAccountInfo);
 
         assertEquals(sut.getId(), sut2.getId());
         assertEquals(sut.getBalance(), sut2.getBalance(), 0);
@@ -180,14 +180,14 @@ public class CheckingAccountTest {
     // test printReport()
     @Test
     public void testPrintReport() {
-        final int ID = sut.getId();
-        final int ACCOUNT_NUMBER = sut.getAccountNumber();
-        final float BALANCE = sut.getBalance();
-        final float OVERDRAFT = sut.getOverdraft();
+        final int id = sut.getId();
+        final int accountNumber = sut.getAccountNumber();
+        final float balance = sut.getBalance();
+        final float overdraft = sut.getOverdraft();
 
-        final String EXPECTED_STRING = "Account type = Checking account, ID = " + ID
-                + ", account number = " + ACCOUNT_NUMBER + ", balance = " + BALANCE
-                + ", overdraft = " + OVERDRAFT;
+        final String expectedString = "Account type = Checking account, ID = " + id
+                + ", account number = " + accountNumber + ", balance = " + balance
+                + ", overdraft = " + overdraft;
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -195,21 +195,21 @@ public class CheckingAccountTest {
         final String printReportOutput = byteArrayOutputStream.toString();
 
         assertEquals("printReport() method does not produce the expected output",
-                EXPECTED_STRING, printReportOutput);
+                expectedString, printReportOutput);
     }
 
 
     // test toString()
     @Test
     public void testToString() {
-        final int ID = sut.getId();
+        final int id = sut.getId();
 
-        final String EXPECTED_STRING =
-                "CheckingAccount [id=" + ID + ", accountNumber=" + CHECKING_ACCOUNT_ACCOUNT_NUMBER
+        final String expectedString =
+                "CheckingAccount [id=" + id + ", accountNumber=" + CHECKING_ACCOUNT_ACCOUNT_NUMBER
                         + ", balance=" + CHECKING_ACCOUNT_INITIAL_BALANCE + ", overdraft=" + CHECKING_ACCOUNT_OVERDRAFT + "]";
 
         assertEquals("toString() method does not produce the expected output",
-                EXPECTED_STRING, sut.toString());
+                expectedString, sut.toString());
     }
 
 

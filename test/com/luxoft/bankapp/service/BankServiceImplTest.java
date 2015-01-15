@@ -2,20 +2,20 @@ package com.luxoft.bankapp.service;
 
 import com.luxoft.bankapp.exception.*;
 import com.luxoft.bankapp.model.*;
-import com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper;
-import com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper;
+import com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper;
+import com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Map;
 import java.util.Set;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.CHECKING_ACCOUNT_OVERDRAFT;
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.newCheckingAccount;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newClient;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newSecondClient;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.newSavingAccount;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.CHECKING_ACCOUNT_OVERDRAFT;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.newCheckingAccount;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newClient;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newSecondClient;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.newSavingAccount;
 import static org.junit.Assert.*;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
@@ -29,7 +29,7 @@ public class BankServiceImplTest {
     private CheckingAccount testCheckingAccount;
 
     @Before
-    public void createBankClientsAndAccounts() {
+    public void setUp() {
         testBank = newBank();
         testClient1 = newClient();
         testClient2 = newSecondClient();

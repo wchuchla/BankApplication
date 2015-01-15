@@ -10,16 +10,18 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Set;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.*;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.*;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientServiceImplTest {
 
+    public static final String SAVING = "Saving";
+    public static final String CHECKING = "Checking";
     private ClientService sut;
     private Bank testBank;
     private Client testClient1;
@@ -34,7 +36,7 @@ public class ClientServiceImplTest {
 
 
     @Before
-    public void CreateClientServiceImpl() {
+    public void setUp() {
         testBank = newBank();
         testClient1 = newClient();
         testClient2 = newSecondClient();
@@ -52,34 +54,34 @@ public class ClientServiceImplTest {
     // test getAccount(Client client, String type)
     @Test
     public void testGetSavingAccountInGetAccount() throws AccountNotExistsException {
-        when(bankServiceMock.getAccountByType(testClient1, "Saving")).thenReturn(testSavingAccount);
+        when(bankServiceMock.getAccountByType(testClient1, SAVING)).thenReturn(testSavingAccount);
 
-        Account gootenAccount = sut.getAccount(testClient1, "Saving");
+        Account gootenAccount = sut.getAccount(testClient1, SAVING);
 
         assertTrue(testSavingAccount == gootenAccount);
     }
 
     @Test
     public void testGetCheckingAccountInGetAccount() throws AccountNotExistsException {
-        when(bankServiceMock.getAccountByType(testClient1, "Checking")).thenReturn(testCheckingAccount);
+        when(bankServiceMock.getAccountByType(testClient1, CHECKING)).thenReturn(testCheckingAccount);
 
-        Account gootenAccount = sut.getAccount(testClient1, "Checking");
+        Account gootenAccount = sut.getAccount(testClient1, CHECKING);
 
         assertTrue(testCheckingAccount == gootenAccount);
     }
 
     @Test(expected = AccountNotExistsException.class)
     public void testGetNotExistingSavingAccountInGetAccount() throws AccountNotExistsException {
-        when(bankServiceMock.getAccountByType(testClient2, "Saving")).thenThrow(AccountNotExistsException.class);
+        when(bankServiceMock.getAccountByType(testClient2, SAVING)).thenThrow(AccountNotExistsException.class);
 
-        sut.getAccount(testClient2, "Saving");
+        sut.getAccount(testClient2, SAVING);
     }
 
     @Test(expected = AccountNotExistsException.class)
     public void testGetNotExistingCheckingAccountInGetAccount() throws AccountNotExistsException {
-        when(bankServiceMock.getAccountByType(testClient2, "Checking")).thenThrow(AccountNotExistsException.class);
+        when(bankServiceMock.getAccountByType(testClient2, CHECKING)).thenThrow(AccountNotExistsException.class);
 
-        sut.getAccount(testClient2, "Checking");
+        sut.getAccount(testClient2, CHECKING);
     }
 
 

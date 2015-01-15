@@ -20,7 +20,7 @@ public class ExitCommandTest {
     // test printCommandInfo()
     @Test
     public void testPrintCommandInfo() {
-        final String EXPECTED_STRING = "Exit";
+        final String expectedString = "Exit";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -28,6 +28,6 @@ public class ExitCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("printCommandInfo() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 }

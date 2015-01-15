@@ -25,6 +25,7 @@ public class BankServerThreadedTest {
     private static final int POOL_SIZE = 100;
 
     private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + BankServerThreadedTest.class.getName());
+    public static final String SAVING = "saving";
 
     // test with runnable mock
     @Ignore
@@ -42,7 +43,7 @@ public class BankServerThreadedTest {
 
         try {
             Client client = clientService.getClient(TEST_CLIENT_NAME);
-            initialBalance = clientService.getBalance(clientService.getAccount(client, "saving"));
+            initialBalance = clientService.getBalance(clientService.getAccount(client, SAVING));
             BankClientMock bankClientMock = new BankClientMock(client);
             Thread[] threads = new Thread[CLIENTS_NUMBER];
             for (int i = 0; i < CLIENTS_NUMBER; i++) {
@@ -58,7 +59,7 @@ public class BankServerThreadedTest {
             Thread.sleep(1000);
 
             assertEquals(initialBalance - WITHDRAWAL_AMOUNT * CLIENTS_NUMBER,
-                    clientService.getBalance(clientService.getAccount(client, "saving")), 0f);
+                    clientService.getBalance(clientService.getAccount(client, SAVING)), 0f);
 
         } catch (ClientNotExistsException | AccountNotExistsException | InterruptedException e) {
             EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
@@ -82,7 +83,7 @@ public class BankServerThreadedTest {
 
         try {
             Client client = clientDAO.getClient(TEST_CLIENT_NAME);
-            initialBalance = clientDAO.getBalance(clientDAO.getAccount(client, "saving"));
+            initialBalance = clientDAO.getBalance(clientDAO.getAccount(client, SAVING));
 
             ExecutorService executor = Executors.newFixedThreadPool(POOL_SIZE);
             List<Long> clientServiceTimeList = new ArrayList<>();
@@ -101,7 +102,7 @@ public class BankServerThreadedTest {
                     + calcAverage(clientServiceTimeList) + " us");
 
             assertEquals(initialBalance - WITHDRAWAL_AMOUNT * CLIENTS_NUMBER,
-                    clientDAO.getBalance(clientDAO.getAccount(client, "saving")), 0f);
+                    clientDAO.getBalance(clientDAO.getAccount(client, SAVING)), 0f);
         } catch (ClientNotExistsException | AccountNotExistsException e) {
             System.out.println(e.getMessage());
         } catch (InterruptedException | ExecutionException e) {

@@ -1,4 +1,4 @@
-package com.luxoft.bankapp.unitTestHelper.dao;
+package com.luxoft.bankapp.helper.dao;
 
 import com.luxoft.bankapp.dao.AccountDAOImpl;
 import com.luxoft.bankapp.dao.BankDAOImpl;
@@ -19,9 +19,9 @@ import static org.junit.Assert.assertNotNull;
 
 public class AbstractDbUnitTestCase {
 
-    protected static final BankDAOImpl bankDAO = new BankDAOImpl();
-    protected static final ClientDAOImpl clientDAO = new ClientDAOImpl();
-    protected static final AccountDAOImpl accountDAO = new AccountDAOImpl();
+    protected static final BankDAOImpl BANK_DAO = new BankDAOImpl();
+    protected static final ClientDAOImpl CLIENT_DAO = new ClientDAOImpl();
+    protected static final AccountDAOImpl ACCOUNT_DAO = new AccountDAOImpl();
     protected static H2Connection dbunitConnection;
     private static Connection connection;
 
@@ -46,14 +46,14 @@ public class AbstractDbUnitTestCase {
 
     @Before
     public void setupDatabase() throws Exception {
-        connection = bankDAO.openConnection();
+        connection = BANK_DAO.openConnection();
         dbunitConnection = new H2Connection(connection, null);
-        bankDAO.createTables();
+        BANK_DAO.createTables();
     }
 
     @After
     public void closeDatabase() throws Exception {
-        bankDAO.dropTables();
+        BANK_DAO.dropTables();
         if (connection != null) {
             connection.close();
             connection = null;

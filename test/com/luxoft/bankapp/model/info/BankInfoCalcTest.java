@@ -12,11 +12,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.BANK_NAME;
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.*;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.*;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.BANK_NAME;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

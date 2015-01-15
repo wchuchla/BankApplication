@@ -82,7 +82,7 @@ public class AbstractAccountTest {
 
         float balance = sut1.getBalance();
 
-        final String EXPECTED_STRING = "The rounded account balance is " + Math.round(balance);
+        final String expectedString = "The rounded account balance is " + Math.round(balance);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -90,7 +90,7 @@ public class AbstractAccountTest {
         final String decimalValueOutput = byteArrayOutputStream.toString();
 
         assertEquals("decimalValue() method does not produce the expected output",
-                EXPECTED_STRING, decimalValueOutput);
+                expectedString, decimalValueOutput);
     }
 
 
@@ -98,12 +98,12 @@ public class AbstractAccountTest {
     @Test
     public void testPrintReport() {
         sut1 = new TestingAccount(1.0f);
-        final int ID = sut1.getId();
-        final int ACCOUNT_NUMBER = sut1.getAccountNumber();
-        final float BALANCE = sut1.getBalance();
+        final int id = sut1.getId();
+        final int accountNumber = sut1.getAccountNumber();
+        final float balance = sut1.getBalance();
 
-        final String EXPECTED_STRING = "ID = " + ID + ", account number = " + ACCOUNT_NUMBER
-                + ", balance = " + BALANCE;
+        final String expectedString = "ID = " + id + ", account number = " + accountNumber
+                + ", balance = " + balance;
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -111,7 +111,7 @@ public class AbstractAccountTest {
         final String printReportOutput = byteArrayOutputStream.toString();
 
         assertEquals("printReport() method does not produce the expected output",
-                EXPECTED_STRING, printReportOutput);
+                expectedString, printReportOutput);
     }
 
 
@@ -138,7 +138,7 @@ public class AbstractAccountTest {
 
         @Override
         public void withdraw(float amount) throws NotEnoughFundsException {
-
+            // do nothing because in prodution code it's abstract class
         }
 
         @Override
@@ -148,6 +148,7 @@ public class AbstractAccountTest {
 
         @Override
         public void parseFeed(Map<String, String> feed) {
+            // do nothing because in prodution code it's abstract class
         }
     }
 

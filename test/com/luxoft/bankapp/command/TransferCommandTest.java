@@ -22,9 +22,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.*;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -142,7 +142,7 @@ public class TransferCommandTest {
     // test printCommandInfo()
     @Test
     public void testPrintCommandInfo() {
-        final String EXPECTED_STRING = "Make a transfer";
+        final String expectedString = "Make a transfer";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -150,7 +150,7 @@ public class TransferCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("printCommandInfo() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
 }

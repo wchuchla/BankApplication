@@ -17,8 +17,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newClient;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newClient;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -71,7 +71,7 @@ public class DBRemoveClientCommandTest {
 
         sut.execute();
 
-        assertTrue(testBank.getClients().size() == 0);
+        assertTrue(testBank.getClients().isEmpty());
     }
 
     @Test
@@ -104,13 +104,13 @@ public class DBRemoveClientCommandTest {
 
         sut.execute();
 
-        assertTrue(testBank.getClients().size() == 0);
+        assertTrue(testBank.getClients().isEmpty());
     }
 
     // test printCommandInfo()
     @Test
     public void testPrintCommandInfo() {
-        final String EXPECTED_STRING = "Remove the active client";
+        final String expectedString = "Remove the active client";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -118,6 +118,6 @@ public class DBRemoveClientCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("printCommandInfo() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 }

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.util.Set;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

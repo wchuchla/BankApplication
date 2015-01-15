@@ -6,9 +6,9 @@ import com.luxoft.bankapp.model.Client;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.newCheckingAccount;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newClient;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.newCheckingAccount;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newClient;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -18,7 +18,7 @@ public class TestServiceTest {
     private Bank testBank2;
 
     @Before
-    public void initBanks() {
+    public void setUp() {
         testBank1 = newBank();
         testBank2 = newBank();
         testBank1.setId(1);

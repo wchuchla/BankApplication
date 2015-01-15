@@ -11,10 +11,10 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.*;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newClient;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newClient;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.*;
 import static org.junit.Assert.assertEquals;
 
 public class GetAccountsCommandTest {
@@ -41,7 +41,7 @@ public class GetAccountsCommandTest {
     // test execute()
     @Test
     public void testGetAccountsInExecute() {
-        final String EXPECTED_STRING = "List of accounts: \r\n" +
+        final String expectedString = "List of accounts: \r\n" +
                 "0) Account type = Saving account, ID = 0, account number = " + SAVING_ACCOUNT_ACCOUNT_NUMBER + ", " +
                 "balance = " + SAVING_ACCOUNT_INITIAL_BALANCE + "\r\n" +
                 "1) Account type = Checking account, ID = 0, account number = " + CHECKING_ACCOUNT_ACCOUNT_NUMBER +
@@ -54,13 +54,13 @@ public class GetAccountsCommandTest {
         final String executeOutput = byteArrayOutputStream.toString();
 
         assertEquals("printCommandInfo() method does not produce the expected output",
-                EXPECTED_STRING, executeOutput);
+                expectedString, executeOutput);
     }
 
     // test printCommandInfo()
     @Test
     public void testPrintCommandInfo() {
-        final String EXPECTED_STRING = "Get list of account";
+        final String expectedString = "Get list of account";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -68,7 +68,7 @@ public class GetAccountsCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("printCommandInfo() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
 }

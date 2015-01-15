@@ -1,4 +1,4 @@
-package com.luxoft.bankapp.unitTestHelper.dao;
+package com.luxoft.bankapp.helper.dao;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

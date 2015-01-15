@@ -14,10 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.BANK_NAME;
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.*;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.BANK_NAME;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.*;
 import static org.junit.Assert.*;
 
 public class BankTest {
@@ -27,7 +27,7 @@ public class BankTest {
     private SavingAccount testSavingAccount;
 
     @Before
-    public void CreateBankAndClient() {
+    public void setUp() {
         sut = newBank();
         testClient = newClient();
         testSavingAccount = newSavingAccount();
@@ -39,7 +39,7 @@ public class BankTest {
     // test Bank(String name)
     @Test
     public void testSetNameInConstructor() {
-        Bank sut = new Bank(BANK_NAME);
+        sut = new Bank(BANK_NAME);
 
         assertEquals(BANK_NAME, sut.getName());
     }
@@ -111,15 +111,15 @@ public class BankTest {
     @Test
     @Ignore
     public void testPrintReport() {
-        final int CLIENT_ID = testClient.getId();
+        final int clientId = testClient.getId();
 
-        final int ACCOUNT_ID = testSavingAccount.getId();
+        final int accountId = testSavingAccount.getId();
 
-        final String EXPECTED_STRING = "Bank name: " + BANK_NAME + "\n\nList of clients: \n\n" + "ID: "
-                + CLIENT_ID + ", " + "Name: Mr " + CLIENT_NAME + ", Gender: " + CLIENT_GENDER + ", Email: "
+        final String expectedString = "Bank name: " + BANK_NAME + "\n\nList of clients: \n\n" + "ID: "
+                + clientId + ", " + "Name: Mr " + CLIENT_NAME + ", Gender: " + CLIENT_GENDER + ", Email: "
                 + CLIENT_EMAIL + ", Phone number: " + CLIENT_PHONE_NUMBER + ", City: "
                 + CLIENT_CITY + "\nList of accounts:\n" + "Account type = " + "Saving account,"
-                + " ID = " + ACCOUNT_ID + ", account number = " + SAVING_ACCOUNT_ACCOUNT_NUMBER + ", balance = " +
+                + " ID = " + accountId + ", account number = " + SAVING_ACCOUNT_ACCOUNT_NUMBER + ", balance = " +
                 SAVING_ACCOUNT_INITIAL_BALANCE +
                 "\r\n\r\n";
 
@@ -129,7 +129,7 @@ public class BankTest {
         final String printReportOutput = byteArrayOutputStream.toString();
 
         assertEquals("printReport() method does not produce the expected output",
-                EXPECTED_STRING, printReportOutput);
+                expectedString, printReportOutput);
     }
 
 }

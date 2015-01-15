@@ -20,9 +20,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.newCheckingAccount;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newClient;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.newSavingAccount;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.newCheckingAccount;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newClient;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.newSavingAccount;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -147,7 +147,7 @@ public class AddAccountCommandTest {
     // test printCommandInfo()
     @Test
     public void testPrintCommandInfo() {
-        final String EXPECTED_STRING = "Create new account";
+        final String expectedString = "Create new account";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -155,7 +155,7 @@ public class AddAccountCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("printCommandInfo() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
 }

@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newClient;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newClient;
 
 public class BankClientMock implements Runnable {
     private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + BankClientMock.class.getName());

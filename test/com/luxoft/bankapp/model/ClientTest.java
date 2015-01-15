@@ -15,8 +15,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.*;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -26,7 +26,7 @@ public class ClientTest {
     private Account testAccount;
 
     @Before
-    public void createClientAndAccount() {
+    public void setUp() {
         sut = newClient();
         testAccount = newSavingAccount();
         sut.addAccount(testAccount);
@@ -36,29 +36,23 @@ public class ClientTest {
     // test Client(String name, Gender gender, String email, String phoneNumber, String city, float initialOverdraft)
     @Test
     public void testSetVariablesInConstructor() {
-        sut = new Client("sut", Gender.MALE, "sut@gmail.com", "123456789", "City", 1.0f);
+        sut = new Client(CLIENT_NAME, CLIENT_GENDER, CLIENT_EMAIL, CLIENT_PHONE_NUMBER, CLIENT_CITY, CLIENT_INITIAL_OVERDRAFT);
 
-        assertEquals("sut", sut.getName());
-        assertEquals(Gender.MALE, sut.getGender());
-        assertEquals("sut@gmail.com", sut.getEmail());
-        assertEquals("123456789", sut.getPhoneNumber());
-        assertEquals("City", sut.getCity());
-        assertEquals(1.0f, sut.getInitialOverdraft(), 0.0f);
+        assertClient(sut);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNegativeInitialOverdraftInConstructor() {
-        sut = new Client("sut", Gender.MALE, "sut@gmail.com",
-                "123456789", "City", -1.0f);
+        sut = new Client(CLIENT_NAME, CLIENT_GENDER, CLIENT_EMAIL, CLIENT_PHONE_NUMBER, CLIENT_CITY, -1.0f);
     }
 
 
     // test Client(String name)
     @Test
     public void testSetNameInConstructor() {
-        sut = new Client("sut");
+        sut = new Client(CLIENT_NAME);
 
-        assertEquals("sut", sut.getName());
+        assertEquals(CLIENT_NAME, sut.getName());
     }
 
 
@@ -68,12 +62,7 @@ public class ClientTest {
         ClientInfo clientInfo = new ClientInfo(sut);
         Client sut2 = new Client(clientInfo);
 
-        assertEquals(CLIENT_NAME, sut2.getName());
-        assertEquals(CLIENT_GENDER, sut2.getGender());
-        assertEquals(CLIENT_EMAIL, sut2.getEmail());
-        assertEquals(CLIENT_PHONE_NUMBER, sut2.getPhoneNumber());
-        assertEquals(CLIENT_CITY, sut2.getCity());
-        assertEquals(CLIENT_INITIAL_OVERDRAFT, sut2.getInitialOverdraft(), 0.0f);
+        assertClient(sut2);
     }
 
 
@@ -83,20 +72,16 @@ public class ClientTest {
         Map<String, String> feed = new HashMap<>();
 
         feed.put("gender", "M");
-        feed.put("email", "feedClient@gmail.com");
-        feed.put("phonenumber", "123456789");
-        feed.put("city", "City");
-        feed.put("initialoverdraft", "100");
+        feed.put("email", CLIENT_EMAIL);
+        feed.put("phonenumber", CLIENT_PHONE_NUMBER);
+        feed.put("city", CLIENT_CITY);
+        feed.put("initialoverdraft", "1000");
         feed.put("accounttype", "saving");
         feed.put("balance", "1");
 
         sut.parseFeed(feed);
 
-        assertEquals(Gender.MALE, sut.getGender());
-        assertEquals("feedClient@gmail.com", sut.getEmail());
-        assertEquals("123456789", sut.getPhoneNumber());
-        assertEquals("City", sut.getCity());
-        assertEquals(100.0f, sut.getInitialOverdraft(), 0.0f);
+        assertClient(sut);
     }
 
 
@@ -167,11 +152,11 @@ public class ClientTest {
     // test getClientSalutation()
     @Test
     public void testGetClientSalutation() {
-        final String PREFIX = sut.getGender().getPrefix();
+        final String prefix = sut.getGender().getPrefix();
 
-        final String EXPECTED_STRING = PREFIX + " " + CLIENT_NAME;
+        final String expectedString = prefix + " " + CLIENT_NAME;
 
-        assertEquals(EXPECTED_STRING, sut.getClientSalutation());
+        assertEquals(expectedString, sut.getClientSalutation());
     }
 
 
@@ -179,13 +164,13 @@ public class ClientTest {
     @Test
     @Ignore
     public void testPrintReport() {
-        final int ID = sut.getId();
-        final int ACCOUNT_ID = testAccount.getId();
+        final int id = sut.getId();
+        final int accountId = testAccount.getId();
 
-        final String EXPECTED_STRING = "ID: " + ID + ", Name: Mr " + CLIENT_NAME + ", Gender: " + CLIENT_GENDER
+        final String expectedString = "ID: " + id + ", Name: Mr " + CLIENT_NAME + ", Gender: " + CLIENT_GENDER
                 + ", Email: " + CLIENT_EMAIL + ", Phone number: " + CLIENT_PHONE_NUMBER + ", City: "
                 + CLIENT_CITY + "\nList of accounts:\n" + "Account type = " + "Saving account,"
-                + " ID = " + ACCOUNT_ID + ", account number = " + SAVING_ACCOUNT_ACCOUNT_NUMBER + ", balance = "
+                + " ID = " + accountId + ", account number = " + SAVING_ACCOUNT_ACCOUNT_NUMBER + ", balance = "
                 + SAVING_ACCOUNT_INITIAL_BALANCE + "\n";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -194,7 +179,7 @@ public class ClientTest {
         final String printReportOutput = byteArrayOutputStream.toString();
 
         assertEquals("printReport() method does not produce the expected output",
-                EXPECTED_STRING, printReportOutput);
+                expectedString, printReportOutput);
     }
 
 

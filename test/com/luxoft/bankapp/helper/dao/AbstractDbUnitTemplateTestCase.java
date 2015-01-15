@@ -1,4 +1,4 @@
-package com.luxoft.bankapp.unitTestHelper.dao;
+package com.luxoft.bankapp.helper.dao;
 
 import org.dbunit.Assertion;
 import org.dbunit.dataset.IDataSet;
@@ -28,7 +28,7 @@ public class AbstractDbUnitTemplateTestCase extends AbstractDbUnitTestCase {
         private void setupDataSet(FrameworkMethod method) {
             DataSets dataSetAnnotation = getAnnotation(method);
             String dataSetName = dataSetAnnotation.setUpDataSet();
-            if (!dataSetName.equals("")) {
+            if (!"".equals(dataSetName)) {
                 try {
                     IDataSet dataSet = getReplacedDataSet(dataSetName, id);
                     DatabaseOperation.CLEAN_INSERT.execute(dbunitConnection, dataSet);
@@ -41,7 +41,7 @@ public class AbstractDbUnitTemplateTestCase extends AbstractDbUnitTestCase {
         private void assertDataSet(FrameworkMethod method) {
             DataSets dataSetAnnotation = getAnnotation(method);
             String dataSetName = dataSetAnnotation.assertDataSet();
-            if (!dataSetName.equals("")) {
+            if (!"".equals(dataSetName)) {
                 try {
                     IDataSet expectedDataSet = getReplacedDataSet(dataSetName, id);
                     IDataSet actualDataSet = dbunitConnection.createDataSet();

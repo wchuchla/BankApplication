@@ -19,10 +19,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.BankEntityHelper.newBank;
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.newClient;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.SAVING_ACCOUNT_INITIAL_BALANCE;
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.newSavingAccount;
+import static com.luxoft.bankapp.helper.entity.BankEntityHelper.newBank;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.newClient;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.SAVING_ACCOUNT_INITIAL_BALANCE;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.newSavingAccount;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -131,7 +131,7 @@ public class WithdrawCommandTest {
     // test printCommandInfo()
     @Test
     public void testPrintCommandInfo() {
-        final String EXPECTED_STRING = "Make a withdraw";
+        final String expectedString = "Make a withdraw";
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(byteArrayOutputStream));
@@ -139,7 +139,7 @@ public class WithdrawCommandTest {
         final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
         assertEquals("printCommandInfo() method does not produce the expected output",
-                EXPECTED_STRING, printCommandInfoOutput);
+                expectedString, printCommandInfoOutput);
     }
 
 }

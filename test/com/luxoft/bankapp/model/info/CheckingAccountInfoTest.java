@@ -4,7 +4,7 @@ import com.luxoft.bankapp.model.CheckingAccount;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.CheckingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.CheckingAccountEntityHelper.*;
 import static org.junit.Assert.assertEquals;
 
 public class CheckingAccountInfoTest {
@@ -45,11 +45,11 @@ public class CheckingAccountInfoTest {
     public void testToString() {
         sut = new CheckingAccountInfo(testCheckingAccount);
 
-        final String EXPECTED_STRING = "CheckingAccountInfo [accountNumber=" + CHECKING_ACCOUNT_ACCOUNT_NUMBER + ", " +
+        final String expectedString = "CheckingAccountInfo [accountNumber=" + CHECKING_ACCOUNT_ACCOUNT_NUMBER + ", " +
                 "balance=" + CHECKING_ACCOUNT_INITIAL_BALANCE + ", " + "overdraft=" + CHECKING_ACCOUNT_OVERDRAFT + "]";
 
         assertEquals("toString() method does not produce the expected output",
-                EXPECTED_STRING, sut.toString());
+                expectedString, sut.toString());
     }
 
 }

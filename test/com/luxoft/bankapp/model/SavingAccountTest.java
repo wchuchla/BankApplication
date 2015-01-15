@@ -12,7 +12,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.SavingAccountEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.SavingAccountEntityHelper.*;
 import static org.junit.Assert.assertEquals;
 
 public class SavingAccountTest {
@@ -20,7 +20,7 @@ public class SavingAccountTest {
     private SavingAccount sut;
 
     @Before
-    public void createSavingAccountWithBalance0AndOverdraft100() {
+    public void setUp() {
         sut = newSavingAccount();
     }
 
@@ -113,9 +113,9 @@ public class SavingAccountTest {
     // test printReport()
     @Test
     public void testPrintReport() {
-        final int ID = sut.getId();
+        final int id = sut.getId();
 
-        final String EXPECTED_STRING = "Account type = Saving account, ID = " + ID
+        final String expectedString = "Account type = Saving account, ID = " + id
                 + ", account number = " + SAVING_ACCOUNT_ACCOUNT_NUMBER + ", balance = " + SAVING_ACCOUNT_INITIAL_BALANCE;
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -124,20 +124,20 @@ public class SavingAccountTest {
         final String printReportOutput = byteArrayOutputStream.toString();
 
         assertEquals("printReport() method does not produce the expected output",
-                EXPECTED_STRING, printReportOutput);
+                expectedString, printReportOutput);
     }
 
 
     // test toString()
     @Test
     public void testToString() {
-        final int ID = sut.getId();
+        final int id = sut.getId();
 
-        final String EXPECTED_STRING = "SavingAccount [id=" + ID + ", accountNumber=" + SAVING_ACCOUNT_ACCOUNT_NUMBER
+        final String expectedString = "SavingAccount [id=" + id + ", accountNumber=" + SAVING_ACCOUNT_ACCOUNT_NUMBER
                 + ", balance=" + SAVING_ACCOUNT_INITIAL_BALANCE + "]";
 
         assertEquals("toString() method does not produce the expected output",
-                EXPECTED_STRING, sut.toString());
+                expectedString, sut.toString());
     }
 
 

@@ -14,6 +14,10 @@ public class TestService {
 
     private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + TestService.class.getName());
 
+    private TestService() {
+
+    }
+
     public static boolean isEquals(Object o1, Object o2) {
 
         if (o1 == o2) {
@@ -32,7 +36,7 @@ public class TestService {
         Map<String, Object> o1SetFieldsMap = getSetFields(o1);
         Map<String, Object> o2SetFieldsMap = getSetFields(o2);
 
-        if (o1SetFieldsMap.size() != 0 || o2SetFieldsMap.size() != 0) {
+        if (!o1SetFieldsMap.isEmpty() || !o2SetFieldsMap.isEmpty()) {
             for (String fieldName : o1SetFieldsMap.keySet()) {
                 Set<Object> set1 = (Set<Object>) o1SetFieldsMap.get(fieldName);
                 Set<Object> set2 = (Set<Object>) o2SetFieldsMap.get(fieldName);
@@ -55,7 +59,7 @@ public class TestService {
     }
 
     private static Map<String, Object> getUnannotatedAndNotSetFields(Object obj) {
-        ArrayList<Field> fields = new ArrayList<>();
+        List<Field> fields = new ArrayList<>();
         fields.addAll(Arrays.asList(obj.getClass().getDeclaredFields()));
         fields.addAll(Arrays.asList(obj.getClass().getSuperclass().getDeclaredFields()));
 
@@ -74,7 +78,7 @@ public class TestService {
     }
 
     private static Map<String, Object> getSetFields(Object obj) {
-        ArrayList<Field> fields = new ArrayList<>();
+        List<Field> fields = new ArrayList<>();
         fields.addAll(Arrays.asList(obj.getClass().getDeclaredFields()));
         fields.addAll(Arrays.asList(obj.getClass().getSuperclass().getDeclaredFields()));
         Map<String, Object> map = new HashMap<>();

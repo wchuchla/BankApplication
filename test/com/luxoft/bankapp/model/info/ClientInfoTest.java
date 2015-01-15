@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.util.Set;
 
-import static com.luxoft.bankapp.unitTestHelper.entity.ClientEntityHelper.*;
+import static com.luxoft.bankapp.helper.entity.ClientEntityHelper.*;
 import static org.junit.Assert.assertEquals;
 
 public class ClientInfoTest {
@@ -54,14 +54,14 @@ public class ClientInfoTest {
     public void testToString() {
         sut = new ClientInfo(testClient);
 
-        final Set<Account> ACCOUNTS = sut.getAccounts();
+        final Set<Account> accounts = sut.getAccounts();
 
-        final String EXPECTED_STRING = "ClientInfo [name=" + CLIENT_NAME + ", gender=" + CLIENT_GENDER + ", email="
+        final String expectedString = "ClientInfo [name=" + CLIENT_NAME + ", gender=" + CLIENT_GENDER + ", email="
                 + CLIENT_EMAIL + ", phoneNumber=" + CLIENT_PHONE_NUMBER + ", city=" + CLIENT_CITY + ", accounts="
-                + ACCOUNTS + ", " + "initialOverdraft=" + CLIENT_INITIAL_OVERDRAFT + "]";
+                + accounts + ", " + "initialOverdraft=" + CLIENT_INITIAL_OVERDRAFT + "]";
 
         assertEquals("toString() method does not produce the expected output",
-                EXPECTED_STRING, sut.toString());
+                expectedString, sut.toString());
     }
 
 }

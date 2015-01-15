@@ -1,4 +1,4 @@
-package com.luxoft.bankapp.unitTestHelper.entity;
+package com.luxoft.bankapp.helper.entity;
 
 
 import com.luxoft.bankapp.model.SavingAccount;
