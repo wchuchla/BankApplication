@@ -30,132 +30,132 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class AddAccountCommandTest {
 
-	private AddAccountCommand sut;
+    private AddAccountCommand sut;
 
-	private Client testClient;
+    private Client testClient;
 
-	@Mock
-	private BankService bankServiceMock;
-	@Mock
-	private AccountDAO accountDAOMock;
+    @Mock
+    private BankService bankServiceMock;
+    @Mock
+    private AccountDAO accountDAOMock;
 
-	@Before
-	public void setUp() throws DAOException {
-		testClient = newClient();
+    @Before
+    public void setUp() throws DAOException {
+        testClient = newClient();
 
-		BankCommander.activeClient = testClient;
+        BankCommander.activeClient = testClient;
 
-		sut = new AddAccountCommand(bankServiceMock, accountDAOMock);
+        sut = new AddAccountCommand(bankServiceMock, accountDAOMock);
 
-		doNothing().when(accountDAOMock).save(any(Client.class), any(Account.class));
-	}
+        doNothing().when(accountDAOMock).save(any(Client.class), any(Account.class));
+    }
 
-	@After
-	public void tearDown() {
-		System.setIn(System.in);
-	}
-
-
-	// test execute()
-	@Test
-	public void testAddSavingAccountInExecute() throws AccountExistsException {
-		doAnswer(invocationOnMock -> {
-			Object[] args = invocationOnMock.getArguments();
-			Client client = (Client) args[0];
-			SavingAccount savingAccount = (SavingAccount) args[1];
-			client.addAccount(savingAccount);
-			return null;
-		}).when(bankServiceMock).addAccount(any(Client.class), any(SavingAccount.class));
-
-		String accountType = "Saving\r\n";
-
-		System.setIn(new ByteArrayInputStream(accountType.getBytes()));
-
-		sut.execute();
-
-		assertTrue(testClient.getAccounts().size() == 1);
-	}
-
-	@Test
-	public void testAddCheckingAccountInExecute() throws AccountExistsException {
-		doAnswer(invocationOnMock -> {
-			Object[] args = invocationOnMock.getArguments();
-			Client client = (Client) args[0];
-			CheckingAccount checkingAccount = (CheckingAccount) args[1];
-			client.addAccount(checkingAccount);
-			return null;
-		}).when(bankServiceMock).addAccount(any(Client.class), any(CheckingAccount.class));
-
-		String accountType = "Checking\r\n";
-		System.setIn(new ByteArrayInputStream(accountType.getBytes()));
-
-		sut.execute();
-
-		assertTrue(testClient.getAccounts().size() == 1);
-	}
-
-	@Test
-	public void testAddExistingSavingAccountInExecute() throws AccountExistsException {
-		doThrow(AccountExistsException.class).when(bankServiceMock).addAccount(any(Client.class), any(SavingAccount
-				.class));
-
-		testClient.addAccount(newSavingAccount());
-
-		String accountType = "Saving\r\n";
-
-		System.setIn(new ByteArrayInputStream(accountType.getBytes()));
-
-		sut.execute();
-
-		assertTrue(testClient.getAccounts().size() == 1);
-	}
+    @After
+    public void tearDown() {
+        System.setIn(System.in);
+    }
 
 
-	@Test
-	public void testAddExistingCheckingAccountInExecute() throws AccountExistsException {
-		doThrow(AccountExistsException.class).when(bankServiceMock).addAccount(any(Client.class), any(CheckingAccount
-				.class));
+    // test execute()
+    @Test
+    public void testAddSavingAccountInExecute() throws AccountExistsException {
+        doAnswer(invocationOnMock -> {
+            Object[] args = invocationOnMock.getArguments();
+            Client client = (Client) args[0];
+            SavingAccount savingAccount = (SavingAccount) args[1];
+            client.addAccount(savingAccount);
+            return null;
+        }).when(bankServiceMock).addAccount(any(Client.class), any(SavingAccount.class));
 
-		testClient.addAccount(newCheckingAccount());
+        String accountType = "Saving\r\n";
 
-		String accountType = "Checking\r\n";
-		System.setIn(new ByteArrayInputStream(accountType.getBytes()));
+        System.setIn(new ByteArrayInputStream(accountType.getBytes()));
 
-		sut.execute();
+        sut.execute();
 
-		assertTrue(testClient.getAccounts().size() == 1);
-	}
+        assertTrue(testClient.getAccounts().size() == 1);
+    }
 
-	@Test
-	public void testAddAccountWithInvalidAccountTypeInExecute() throws AccountExistsException {
-		doAnswer(invocationOnMock -> {
-			Object[] args = invocationOnMock.getArguments();
-			Client client = (Client) args[0];
-			SavingAccount savingAccount = (SavingAccount) args[1];
-			client.addAccount(savingAccount);
-			return null;
-		}).when(bankServiceMock).addAccount(any(Client.class), any(SavingAccount.class));
+    @Test
+    public void testAddCheckingAccountInExecute() throws AccountExistsException {
+        doAnswer(invocationOnMock -> {
+            Object[] args = invocationOnMock.getArguments();
+            Client client = (Client) args[0];
+            CheckingAccount checkingAccount = (CheckingAccount) args[1];
+            client.addAccount(checkingAccount);
+            return null;
+        }).when(bankServiceMock).addAccount(any(Client.class), any(CheckingAccount.class));
 
-		String accountType = "Savin\r\nSaving\n";
-		System.setIn(new ByteArrayInputStream(accountType.getBytes()));
+        String accountType = "Checking\r\n";
+        System.setIn(new ByteArrayInputStream(accountType.getBytes()));
 
-		sut.execute();
+        sut.execute();
 
-		assertTrue(testClient.getAccounts().size() == 1);
-	}
+        assertTrue(testClient.getAccounts().size() == 1);
+    }
 
-	// test printCommandInfo()
-	@Test
-	public void testPrintCommandInfo() {
-		final String EXPECTED_STRING = "Create new account";
+    @Test
+    public void testAddExistingSavingAccountInExecute() throws AccountExistsException {
+        doThrow(AccountExistsException.class).when(bankServiceMock).addAccount(any(Client.class), any(SavingAccount
+                .class));
 
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(byteArrayOutputStream));
-		sut.printCommandInfo();
-		final String printCommandInfoOutput = byteArrayOutputStream.toString();
+        testClient.addAccount(newSavingAccount());
 
-		assertEquals("printCommandInfo() method does not produce the expected output",
-				EXPECTED_STRING, printCommandInfoOutput);
-	}
+        String accountType = "Saving\r\n";
+
+        System.setIn(new ByteArrayInputStream(accountType.getBytes()));
+
+        sut.execute();
+
+        assertTrue(testClient.getAccounts().size() == 1);
+    }
+
+
+    @Test
+    public void testAddExistingCheckingAccountInExecute() throws AccountExistsException {
+        doThrow(AccountExistsException.class).when(bankServiceMock).addAccount(any(Client.class), any(CheckingAccount
+                .class));
+
+        testClient.addAccount(newCheckingAccount());
+
+        String accountType = "Checking\r\n";
+        System.setIn(new ByteArrayInputStream(accountType.getBytes()));
+
+        sut.execute();
+
+        assertTrue(testClient.getAccounts().size() == 1);
+    }
+
+    @Test
+    public void testAddAccountWithInvalidAccountTypeInExecute() throws AccountExistsException {
+        doAnswer(invocationOnMock -> {
+            Object[] args = invocationOnMock.getArguments();
+            Client client = (Client) args[0];
+            SavingAccount savingAccount = (SavingAccount) args[1];
+            client.addAccount(savingAccount);
+            return null;
+        }).when(bankServiceMock).addAccount(any(Client.class), any(SavingAccount.class));
+
+        String accountType = "Savin\r\nSaving\n";
+        System.setIn(new ByteArrayInputStream(accountType.getBytes()));
+
+        sut.execute();
+
+        assertTrue(testClient.getAccounts().size() == 1);
+    }
+
+    // test printCommandInfo()
+    @Test
+    public void testPrintCommandInfo() {
+        final String EXPECTED_STRING = "Create new account";
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(byteArrayOutputStream));
+        sut.printCommandInfo();
+        final String printCommandInfoOutput = byteArrayOutputStream.toString();
+
+        assertEquals("printCommandInfo() method does not produce the expected output",
+                EXPECTED_STRING, printCommandInfoOutput);
+    }
 
 }

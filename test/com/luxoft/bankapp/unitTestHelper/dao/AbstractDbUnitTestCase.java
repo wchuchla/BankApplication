@@ -19,49 +19,49 @@ import static org.junit.Assert.assertNotNull;
 
 public class AbstractDbUnitTestCase {
 
-	protected static final BankDAOImpl bankDAO = new BankDAOImpl();
-	protected static final ClientDAOImpl clientDAO = new ClientDAOImpl();
-	protected static final AccountDAOImpl accountDAO = new AccountDAOImpl();
-	protected static H2Connection dbunitConnection;
-	private static Connection connection;
+    protected static final BankDAOImpl bankDAO = new BankDAOImpl();
+    protected static final ClientDAOImpl clientDAO = new ClientDAOImpl();
+    protected static final AccountDAOImpl accountDAO = new AccountDAOImpl();
+    protected static H2Connection dbunitConnection;
+    private static Connection connection;
 
-	private static IDataSet getDataSet(String name) throws Exception {
-		InputStream inputStream = AbstractDbUnitTestCase.class.getResourceAsStream(name);
-		assertNotNull("file" + name + " not found in classpath", inputStream);
-		Reader reader = new InputStreamReader(inputStream);
-		return new FlatXmlDataSetBuilder().build(reader);
-	}
+    private static IDataSet getDataSet(String name) throws Exception {
+        InputStream inputStream = AbstractDbUnitTestCase.class.getResourceAsStream(name);
+        assertNotNull("file" + name + " not found in classpath", inputStream);
+        Reader reader = new InputStreamReader(inputStream);
+        return new FlatXmlDataSetBuilder().build(reader);
+    }
 
-	public static IDataSet getReplacedDataSet(String name, long id) throws Exception {
-		IDataSet originalDataSet = getDataSet(name);
-		return getReplacedDataSet(originalDataSet, id);
-	}
+    public static IDataSet getReplacedDataSet(String name, long id) throws Exception {
+        IDataSet originalDataSet = getDataSet(name);
+        return getReplacedDataSet(originalDataSet, id);
+    }
 
-	private static IDataSet getReplacedDataSet(IDataSet originalDataSet, long id) {
-		ReplacementDataSet replacementDataSet = new ReplacementDataSet(originalDataSet);
-		replacementDataSet.addReplacementObject("[ID]", id);
-		replacementDataSet.addReplacementObject("[NULL]", null);
-		return replacementDataSet;
-	}
+    private static IDataSet getReplacedDataSet(IDataSet originalDataSet, long id) {
+        ReplacementDataSet replacementDataSet = new ReplacementDataSet(originalDataSet);
+        replacementDataSet.addReplacementObject("[ID]", id);
+        replacementDataSet.addReplacementObject("[NULL]", null);
+        return replacementDataSet;
+    }
 
-	@Before
-	public void setupDatabase() throws Exception {
-		connection = bankDAO.openConnection();
-		dbunitConnection = new H2Connection(connection, null);
-		bankDAO.createTables();
-	}
+    @Before
+    public void setupDatabase() throws Exception {
+        connection = bankDAO.openConnection();
+        dbunitConnection = new H2Connection(connection, null);
+        bankDAO.createTables();
+    }
 
-	@After
-	public void closeDatabase() throws Exception {
-		bankDAO.dropTables();
-		if (connection != null) {
-			connection.close();
-			connection = null;
-		}
-		if (dbunitConnection != null) {
-			dbunitConnection.close();
-			dbunitConnection = null;
-		}
-	}
+    @After
+    public void closeDatabase() throws Exception {
+        bankDAO.dropTables();
+        if (connection != null) {
+            connection.close();
+            connection = null;
+        }
+        if (dbunitConnection != null) {
+            dbunitConnection.close();
+            dbunitConnection = null;
+        }
+    }
 
 }

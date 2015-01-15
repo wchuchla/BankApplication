@@ -30,7 +30,7 @@ public class DBRemoveClientCommand implements Command {
             if ("Yes".equalsIgnoreCase(answer)) {
                 executeRemovingClient();
             }
-        } catch(ClientNotExistsException e) {
+        } catch (ClientNotExistsException e) {
             System.out.println(e.getMessage());
         } catch (DAOException e) {
             EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);

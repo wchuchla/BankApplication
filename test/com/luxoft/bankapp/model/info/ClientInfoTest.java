@@ -12,56 +12,56 @@ import static org.junit.Assert.assertEquals;
 
 public class ClientInfoTest {
 
-	private ClientInfo sut;
-	private Client testClient;
+    private ClientInfo sut;
+    private Client testClient;
 
-	@Before
-	public void createTestClient() {
-		testClient = newClient();
-	}
+    @Before
+    public void createTestClient() {
+        testClient = newClient();
+    }
 
-	// test ClientInfo(Client client)
-	@Test
-	public void testConstructorWithClientParameter() {
-		sut = new ClientInfo(testClient);
+    // test ClientInfo(Client client)
+    @Test
+    public void testConstructorWithClientParameter() {
+        sut = new ClientInfo(testClient);
 
-		assertEquals(CLIENT_NAME, sut.getName());
-		assertEquals(CLIENT_GENDER, sut.getGender());
-		assertEquals(CLIENT_EMAIL, sut.getEmail());
-		assertEquals(CLIENT_PHONE_NUMBER, sut.getPhoneNumber());
-		assertEquals(CLIENT_CITY, sut.getCity());
-		assertEquals(CLIENT_INITIAL_OVERDRAFT, sut.getInitialOverdraft(), 0.0f);
-	}
-
-
-	// test ClientInfo(String name, Gender gender, String email, String phoneNumber, String city, float initialOverdraft)
-	@Test
-	public void testConstructorWithAccountInfoParameters() {
-		sut = new ClientInfo(CLIENT_NAME, CLIENT_GENDER, CLIENT_EMAIL, CLIENT_PHONE_NUMBER, CLIENT_CITY,
-				CLIENT_INITIAL_OVERDRAFT);
-
-		assertEquals(CLIENT_NAME, sut.getName());
-		assertEquals(CLIENT_GENDER, sut.getGender());
-		assertEquals(CLIENT_EMAIL, sut.getEmail());
-		assertEquals(CLIENT_PHONE_NUMBER, sut.getPhoneNumber());
-		assertEquals(CLIENT_CITY, sut.getCity());
-		assertEquals(CLIENT_INITIAL_OVERDRAFT, sut.getInitialOverdraft(), 0.0f);
-	}
+        assertEquals(CLIENT_NAME, sut.getName());
+        assertEquals(CLIENT_GENDER, sut.getGender());
+        assertEquals(CLIENT_EMAIL, sut.getEmail());
+        assertEquals(CLIENT_PHONE_NUMBER, sut.getPhoneNumber());
+        assertEquals(CLIENT_CITY, sut.getCity());
+        assertEquals(CLIENT_INITIAL_OVERDRAFT, sut.getInitialOverdraft(), 0.0f);
+    }
 
 
-	// test toString()
-	@Test
-	public void testToString() {
-		sut = new ClientInfo(testClient);
+    // test ClientInfo(String name, Gender gender, String email, String phoneNumber, String city, float initialOverdraft)
+    @Test
+    public void testConstructorWithAccountInfoParameters() {
+        sut = new ClientInfo(CLIENT_NAME, CLIENT_GENDER, CLIENT_EMAIL, CLIENT_PHONE_NUMBER, CLIENT_CITY,
+                CLIENT_INITIAL_OVERDRAFT);
 
-		final Set<Account> ACCOUNTS = sut.getAccounts();
+        assertEquals(CLIENT_NAME, sut.getName());
+        assertEquals(CLIENT_GENDER, sut.getGender());
+        assertEquals(CLIENT_EMAIL, sut.getEmail());
+        assertEquals(CLIENT_PHONE_NUMBER, sut.getPhoneNumber());
+        assertEquals(CLIENT_CITY, sut.getCity());
+        assertEquals(CLIENT_INITIAL_OVERDRAFT, sut.getInitialOverdraft(), 0.0f);
+    }
 
-		final String EXPECTED_STRING = "ClientInfo [name=" + CLIENT_NAME + ", gender=" + CLIENT_GENDER + ", email="
-				+ CLIENT_EMAIL + ", phoneNumber=" + CLIENT_PHONE_NUMBER + ", city=" + CLIENT_CITY + ", accounts="
-				+ ACCOUNTS + ", " + "initialOverdraft=" + CLIENT_INITIAL_OVERDRAFT + "]";
 
-		assertEquals("toString() method does not produce the expected output",
-				EXPECTED_STRING, sut.toString());
-	}
+    // test toString()
+    @Test
+    public void testToString() {
+        sut = new ClientInfo(testClient);
+
+        final Set<Account> ACCOUNTS = sut.getAccounts();
+
+        final String EXPECTED_STRING = "ClientInfo [name=" + CLIENT_NAME + ", gender=" + CLIENT_GENDER + ", email="
+                + CLIENT_EMAIL + ", phoneNumber=" + CLIENT_PHONE_NUMBER + ", city=" + CLIENT_CITY + ", accounts="
+                + ACCOUNTS + ", " + "initialOverdraft=" + CLIENT_INITIAL_OVERDRAFT + "]";
+
+        assertEquals("toString() method does not produce the expected output",
+                EXPECTED_STRING, sut.toString());
+    }
 
 }

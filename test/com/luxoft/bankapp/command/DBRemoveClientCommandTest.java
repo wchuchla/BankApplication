@@ -28,96 +28,96 @@ import static org.mockito.Mockito.doThrow;
 @RunWith(MockitoJUnitRunner.class)
 public class DBRemoveClientCommandTest {
 
-	private DBRemoveClientCommand sut;
-	private Bank testBank;
+    private DBRemoveClientCommand sut;
+    private Bank testBank;
 
-	@Mock
-	private BankService bankServiceMock;
+    @Mock
+    private BankService bankServiceMock;
 
-	@Mock
-	private ClientDAO clientDAOMock;
+    @Mock
+    private ClientDAO clientDAOMock;
 
-	@Before
-	public void setUp() {
-		testBank = newBank();
-		Client testClient = newClient();
-		testBank.addClient(testClient);
+    @Before
+    public void setUp() {
+        testBank = newBank();
+        Client testClient = newClient();
+        testBank.addClient(testClient);
 
-		BankCommander.activeBank = testBank;
-		BankCommander.activeClient = testClient;
+        BankCommander.activeBank = testBank;
+        BankCommander.activeClient = testClient;
 
-		sut = new DBRemoveClientCommand(bankServiceMock, clientDAOMock);
-	}
+        sut = new DBRemoveClientCommand(bankServiceMock, clientDAOMock);
+    }
 
-	@After
-	public void tearDown() {
-		System.setIn(System.in);
-	}
+    @After
+    public void tearDown() {
+        System.setIn(System.in);
+    }
 
-	// test execute()
-	@Test
-	public void testRemoveClientInExecute() throws ClientNotExistsException {
-		doAnswer(invocationOnMock -> {
-			Object[] args = invocationOnMock.getArguments();
-			Bank bank = (Bank) args[0];
-			String clientName = (String) args[1];
-			Client client = bank.getClients().get(clientName);
-			bank.removeClient(client);
-			return null;
-		}).when(bankServiceMock).removeClient(any(Bank.class), any(String.class));
+    // test execute()
+    @Test
+    public void testRemoveClientInExecute() throws ClientNotExistsException {
+        doAnswer(invocationOnMock -> {
+            Object[] args = invocationOnMock.getArguments();
+            Bank bank = (Bank) args[0];
+            String clientName = (String) args[1];
+            Client client = bank.getClients().get(clientName);
+            bank.removeClient(client);
+            return null;
+        }).when(bankServiceMock).removeClient(any(Bank.class), any(String.class));
 
-		String input = "Yes" + "\r\n";
-		System.setIn(new ByteArrayInputStream(input.getBytes()));
+        String input = "Yes" + "\r\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-		sut.execute();
+        sut.execute();
 
-		assertTrue(testBank.getClients().size() == 0);
-	}
+        assertTrue(testBank.getClients().size() == 0);
+    }
 
-	@Test
-	public void testRemoveNotExistingClientInExecute() throws ClientNotExistsException {
-		doThrow(ClientNotExistsException.class).when(bankServiceMock).removeClient(any(Bank.class), any(String.class));
+    @Test
+    public void testRemoveNotExistingClientInExecute() throws ClientNotExistsException {
+        doThrow(ClientNotExistsException.class).when(bankServiceMock).removeClient(any(Bank.class), any(String.class));
 
-		BankCommander.activeClient = newClient();
+        BankCommander.activeClient = newClient();
 
-		String input = "Yes" + "\r\n";
-		System.setIn(new ByteArrayInputStream(input.getBytes()));
+        String input = "Yes" + "\r\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-		sut.execute();
+        sut.execute();
 
-		assertTrue(testBank.getClients().size() == 1);
-	}
+        assertTrue(testBank.getClients().size() == 1);
+    }
 
-	@Test
-	public void testRemoveClientInExecuteWithTypos() throws ClientNotExistsException {
-		doAnswer(invocationOnMock -> {
-			Object[] args = invocationOnMock.getArguments();
-			Bank bank = (Bank) args[0];
-			String clientName = (String) args[1];
-			Client client = bank.getClients().get(clientName);
-			bank.removeClient(client);
-			return null;
-		}).when(bankServiceMock).removeClient(any(Bank.class), any(String.class));
+    @Test
+    public void testRemoveClientInExecuteWithTypos() throws ClientNotExistsException {
+        doAnswer(invocationOnMock -> {
+            Object[] args = invocationOnMock.getArguments();
+            Bank bank = (Bank) args[0];
+            String clientName = (String) args[1];
+            Client client = bank.getClients().get(clientName);
+            bank.removeClient(client);
+            return null;
+        }).when(bankServiceMock).removeClient(any(Bank.class), any(String.class));
 
-		String input = "Ye" + "\r\n" + "Yes" + "\r\n";
-		System.setIn(new ByteArrayInputStream(input.getBytes()));
+        String input = "Ye" + "\r\n" + "Yes" + "\r\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-		sut.execute();
+        sut.execute();
 
-		assertTrue(testBank.getClients().size() == 0);
-	}
+        assertTrue(testBank.getClients().size() == 0);
+    }
 
-	// test printCommandInfo()
-	@Test
-	public void testPrintCommandInfo() {
-		final String EXPECTED_STRING = "Remove the active client";
+    // test printCommandInfo()
+    @Test
+    public void testPrintCommandInfo() {
+        final String EXPECTED_STRING = "Remove the active client";
 
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(byteArrayOutputStream));
-		sut.printCommandInfo();
-		final String printCommandInfoOutput = byteArrayOutputStream.toString();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(byteArrayOutputStream));
+        sut.printCommandInfo();
+        final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
-		assertEquals("printCommandInfo() method does not produce the expected output",
-				EXPECTED_STRING, printCommandInfoOutput);
-	}
+        assertEquals("printCommandInfo() method does not produce the expected output",
+                EXPECTED_STRING, printCommandInfoOutput);
+    }
 }

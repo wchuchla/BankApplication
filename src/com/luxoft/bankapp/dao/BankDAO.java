@@ -7,11 +7,11 @@ import com.luxoft.bankapp.model.info.BankInfo;
 
 public interface BankDAO {
 
-	Bank getBankByName(String name) throws DAOException, AccountExistsException;
+    Bank getBankByName(String name) throws DAOException, AccountExistsException;
 
-	void save(Bank bank) throws DAOException;
+    void save(Bank bank) throws DAOException;
 
-	void remove(Bank bank) throws DAOException;
+    void remove(Bank bank) throws DAOException;
 
-	BankInfo getBankInfo();
+    BankInfo getBankInfo();
 }

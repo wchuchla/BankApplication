@@ -2,7 +2,10 @@ package com.luxoft.bankapp.dao;
 
 import com.luxoft.bankapp.exception.AccountExistsException;
 import com.luxoft.bankapp.exception.daoexception.DAOException;
-import com.luxoft.bankapp.model.*;
+import com.luxoft.bankapp.model.Bank;
+import com.luxoft.bankapp.model.CheckingAccount;
+import com.luxoft.bankapp.model.Client;
+import com.luxoft.bankapp.model.SavingAccount;
 import com.luxoft.bankapp.service.TestService;
 import org.junit.After;
 import org.junit.Before;
@@ -18,56 +21,56 @@ import static org.junit.Assert.assertTrue;
 
 public class BankDAOImplIntegrationTest {
 
-	private Bank bank;
-	private BankDAOImpl sut;
+    private Bank bank;
+    private BankDAOImpl sut;
 
-	@Before
-	public void setUp() throws DAOException {
-		bank = newBank();
-		Client testClient = newClient();
-		CheckingAccount testCheckingAccount = newCheckingAccount();
-		testClient.addAccount(testCheckingAccount);
-		testClient.setActiveAccount(testCheckingAccount);
+    @Before
+    public void setUp() throws DAOException {
+        bank = newBank();
+        Client testClient = newClient();
+        CheckingAccount testCheckingAccount = newCheckingAccount();
+        testClient.addAccount(testCheckingAccount);
+        testClient.setActiveAccount(testCheckingAccount);
 
-		bank.addClient(testClient);
-		sut = new BankDAOImpl();
-		sut.createTables();
-	}
+        bank.addClient(testClient);
+        sut = new BankDAOImpl();
+        sut.createTables();
+    }
 
-	@After
-	public void tearDown() throws DAOException {
-		sut.dropTables();
-	}
+    @After
+    public void tearDown() throws DAOException {
+        sut.dropTables();
+    }
 
 
-	// test save()
-	@Test
-	public void testInsert() throws IllegalAccessException, DAOException, AccountExistsException {
-		sut.save(bank);
+    // test save()
+    @Test
+    public void testInsert() throws IllegalAccessException, DAOException, AccountExistsException {
+        sut.save(bank);
 
-		Bank bank2 = sut.getBankByName(BANK_NAME);
+        Bank bank2 = sut.getBankByName(BANK_NAME);
 
-		assertTrue(TestService.isEquals(bank, bank2));
-	}
+        assertTrue(TestService.isEquals(bank, bank2));
+    }
 
-	@Test
-	public void testUpdate() throws DAOException, IllegalAccessException, AccountExistsException {
-		sut.save(bank);
+    @Test
+    public void testUpdate() throws DAOException, IllegalAccessException, AccountExistsException {
+        sut.save(bank);
 
-		// Make changes to Bank
-		Client testClient2 = newSecondClient();
-		SavingAccount testSavingAccount = newSavingAccount();
-		testClient2.addAccount(testSavingAccount);
-		testClient2.setActiveAccount(testSavingAccount);
-		bank.addClient(testClient2);
-		sut.save(bank);
+        // Make changes to Bank
+        Client testClient2 = newSecondClient();
+        SavingAccount testSavingAccount = newSavingAccount();
+        testClient2.addAccount(testSavingAccount);
+        testClient2.setActiveAccount(testSavingAccount);
+        bank.addClient(testClient2);
+        sut.save(bank);
 
-		Bank bank2 = sut.getBankByName(BANK_NAME);
+        Bank bank2 = sut.getBankByName(BANK_NAME);
 
-		bank.printReport();
-		bank2.printReport();
+        bank.printReport();
+        bank2.printReport();
 
-		assertTrue(TestService.isEquals(bank, bank2));
-	}
+        assertTrue(TestService.isEquals(bank, bank2));
+    }
 
 }

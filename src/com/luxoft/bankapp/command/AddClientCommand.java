@@ -10,7 +10,6 @@ import com.luxoft.bankapp.service.BankService;
 import com.luxoft.bankapp.validator.Validator;
 
 import java.util.Scanner;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

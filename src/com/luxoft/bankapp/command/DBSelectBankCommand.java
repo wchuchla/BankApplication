@@ -12,41 +12,41 @@ import java.util.logging.Logger;
 
 public class DBSelectBankCommand implements Command {
 
-	private final BankDAO bankDAO;
+    private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + DBSelectBankCommand.class.getName());
+    private final BankDAO bankDAO;
 
-	private static final Logger EXCEPTIONS_LOGGER = Logger.getLogger("LogExceptions." + DBSelectBankCommand.class.getName());
-	public DBSelectBankCommand(BankDAO bankDAO) {
-		this.bankDAO = bankDAO;
-	}
+    public DBSelectBankCommand(BankDAO bankDAO) {
+        this.bankDAO = bankDAO;
+    }
 
 
-	@Override
-	public void execute() {
-		try {
-			Scanner scanner = new Scanner(System.in);
-			String name = activeBankRequest(scanner);
+    @Override
+    public void execute() {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            String name = activeBankRequest(scanner);
 
-			getBank(name);
+            getBank(name);
 
-		} catch (BankNotFoundException | AccountExistsException e) {
-			System.out.println(e.getMessage() + " Please try again.");
-		} catch (DAOException e) {
-			EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
-		}
-	}
+        } catch (BankNotFoundException | AccountExistsException e) {
+            System.out.println(e.getMessage() + " Please try again.");
+        } catch (DAOException e) {
+            EXCEPTIONS_LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
+    }
 
-	private String activeBankRequest(Scanner scanner) {
-		System.out.println("Enter bank name: ");
-		return scanner.nextLine();
-	}
+    private String activeBankRequest(Scanner scanner) {
+        System.out.println("Enter bank name: ");
+        return scanner.nextLine();
+    }
 
-	private void getBank(String name) throws DAOException, AccountExistsException {
-		BankCommander.activeBank = bankDAO.getBankByName(name);
-	}
+    private void getBank(String name) throws DAOException, AccountExistsException {
+        BankCommander.activeBank = bankDAO.getBankByName(name);
+    }
 
-	@Override
-	public void printCommandInfo() {
-		System.out.print("Select the active bank");
-	}
+    @Override
+    public void printCommandInfo() {
+        System.out.print("Select the active bank");
+    }
 
 }

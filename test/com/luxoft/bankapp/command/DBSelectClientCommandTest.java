@@ -1,6 +1,7 @@
 package com.luxoft.bankapp.command;
 
 import com.luxoft.bankapp.dao.ClientDAO;
+import com.luxoft.bankapp.exception.AccountExistsException;
 import com.luxoft.bankapp.exception.daoexception.ClientNotFoundException;
 import com.luxoft.bankapp.exception.daoexception.DAOException;
 import com.luxoft.bankapp.model.Bank;
@@ -28,73 +29,73 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DBSelectClientCommandTest {
 
-	private DBSelectClientCommand sut;
-	private Bank testBank;
-	private Client testClient;
+    private DBSelectClientCommand sut;
+    private Bank testBank;
+    private Client testClient;
 
-	@Mock
-	private BankService bankServiceMock;
+    @Mock
+    private BankService bankServiceMock;
 
-	@Mock
-	private ClientDAO clientDAOMock;
+    @Mock
+    private ClientDAO clientDAOMock;
 
-	@Before
-	public void setUp() throws DAOException {
-		testBank = newBank();
-		testClient = newClient();
-		testBank.addClient(testClient);
+    @Before
+    public void setUp() throws DAOException {
+        testBank = newBank();
+        testClient = newClient();
+        testBank.addClient(testClient);
 
-		BankCommander.activeBank = testBank;
-		BankCommander.activeClient = null;
+        BankCommander.activeBank = testBank;
+        BankCommander.activeClient = null;
 
-		sut = new DBSelectClientCommand(clientDAOMock);
+        sut = new DBSelectClientCommand(clientDAOMock);
 
-		doNothing().when(clientDAOMock).remove(any(Bank.class), any(Client.class));
-	}
+        doNothing().when(clientDAOMock).remove(any(Bank.class), any(Client.class));
+    }
 
-	@After
-	public void tearDown() {
-		System.setIn(System.in);
-	}
+    @After
+    public void tearDown() {
+        System.setIn(System.in);
+    }
 
 
-	// test execute()
-	@Test
-	public void testSelectClientInExecute() throws DAOException {
-		when(clientDAOMock.findClientByName(testBank, CLIENT_NAME)).thenReturn(testClient);
+    // test execute()
+    @Test
+    public void testSelectClientInExecute() throws DAOException, AccountExistsException {
+        when(clientDAOMock.findClientByName(testBank, CLIENT_NAME)).thenReturn(testClient);
 
-		String input = CLIENT_NAME + "\r\n";
-		System.setIn(new ByteArrayInputStream(input.getBytes()));
+        String input = CLIENT_NAME + "\r\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-		sut.execute();
+        sut.execute();
 
-		assertTrue(BankCommander.activeClient == testClient);
-	}
+        assertTrue(BankCommander.activeClient == testClient);
+    }
 
-	@Test
-	public void testSelectNotExistingClientInExecute() throws DAOException {
-		when(clientDAOMock.findClientByName(testBank, CLIENT_INVALID_NAME)).thenThrow(ClientNotFoundException.class);
+    @Test
+    public void testSelectNotExistingClientInExecute() throws DAOException, AccountExistsException {
+        when(clientDAOMock.findClientByName(testBank, CLIENT_INVALID_NAME)).thenThrow(ClientNotFoundException.class);
 
-		String input = CLIENT_INVALID_NAME + "\r\n";
-		System.setIn(new ByteArrayInputStream(input.getBytes()));
+        String input = CLIENT_INVALID_NAME + "\r\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-		sut.execute();
+        sut.execute();
 
-		assertNull(BankCommander.activeClient);
-	}
+        assertNull(BankCommander.activeClient);
+    }
 
-	// test printCommandInfo()
-	@Test
-	public void testPrintCommandInfo() {
-		final String EXPECTED_STRING = "Select the active client";
+    // test printCommandInfo()
+    @Test
+    public void testPrintCommandInfo() {
+        final String EXPECTED_STRING = "Select the active client";
 
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(byteArrayOutputStream));
-		sut.printCommandInfo();
-		final String printCommandInfoOutput = byteArrayOutputStream.toString();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(byteArrayOutputStream));
+        sut.printCommandInfo();
+        final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
-		assertEquals("printCommandInfo() method does not produce the expected output",
-				EXPECTED_STRING, printCommandInfoOutput);
-	}
+        assertEquals("printCommandInfo() method does not produce the expected output",
+                EXPECTED_STRING, printCommandInfoOutput);
+    }
 
 }

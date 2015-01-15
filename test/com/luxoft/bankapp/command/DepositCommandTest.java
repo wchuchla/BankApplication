@@ -31,95 +31,95 @@ import static org.mockito.Mockito.doNothing;
 @RunWith(MockitoJUnitRunner.class)
 public class DepositCommandTest {
 
-	private static DepositCommand sut;
+    private static DepositCommand sut;
 
-	private Client testClient;
-	private SavingAccount testSavingAccount;
+    private Client testClient;
+    private SavingAccount testSavingAccount;
 
-	@Mock
-	private BankService bankServiceMock;
+    @Mock
+    private BankService bankServiceMock;
 
-	@Mock
-	private AccountDAO accountDAOMock;
+    @Mock
+    private AccountDAO accountDAOMock;
 
-	@Before
-	public void setUp() throws DAOException {
-		Bank testBank = newBank();
-		testClient = newClient();
-		testSavingAccount = newSavingAccount();
-		testClient.addAccount(testSavingAccount);
-		testBank.addClient(testClient);
+    @Before
+    public void setUp() throws DAOException {
+        Bank testBank = newBank();
+        testClient = newClient();
+        testSavingAccount = newSavingAccount();
+        testClient.addAccount(testSavingAccount);
+        testBank.addClient(testClient);
 
-		BankCommander.activeBank = testBank;
-		BankCommander.activeClient = testClient;
+        BankCommander.activeBank = testBank;
+        BankCommander.activeClient = testClient;
 
-		sut = new DepositCommand(bankServiceMock, accountDAOMock);
+        sut = new DepositCommand(bankServiceMock, accountDAOMock);
 
-		doNothing().when(accountDAOMock).save(any(Client.class), any(Account.class));
-	}
+        doNothing().when(accountDAOMock).save(any(Client.class), any(Account.class));
+    }
 
-	@After
-	public void tearDown() {
-		System.setIn(System.in);
-	}
+    @After
+    public void tearDown() {
+        System.setIn(System.in);
+    }
 
 
-	// test execute()
-	@Test
-	public void testDepositInExecute() {
+    // test execute()
+    @Test
+    public void testDepositInExecute() {
 
-		doAnswer(invocationOnMock -> {
-			Object[] args = invocationOnMock.getArguments();
-			Client client = (Client) args[0];
-			SavingAccount savingAccount = (SavingAccount) args[1];
-			client.setActiveAccount(savingAccount);
-			return null;
-		}).when(bankServiceMock).setActiveAccount(testClient, testSavingAccount);
+        doAnswer(invocationOnMock -> {
+            Object[] args = invocationOnMock.getArguments();
+            Client client = (Client) args[0];
+            SavingAccount savingAccount = (SavingAccount) args[1];
+            client.setActiveAccount(savingAccount);
+            return null;
+        }).when(bankServiceMock).setActiveAccount(testClient, testSavingAccount);
 
-		float amount = 1;
+        float amount = 1;
 
-		String input = "0" + "\r\n" + amount + "\r\n";
-		System.setIn(new ByteArrayInputStream(input.getBytes()));
+        String input = "0" + "\r\n" + amount + "\r\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-		sut.execute();
+        sut.execute();
 
-		assertEquals(SAVING_ACCOUNT_INITIAL_BALANCE + amount, testSavingAccount.getBalance(), 0.0f);
-	}
+        assertEquals(SAVING_ACCOUNT_INITIAL_BALANCE + amount, testSavingAccount.getBalance(), 0.0f);
+    }
 
-	@Test
-	public void testDepositInExecuteWithTypos() {
+    @Test
+    public void testDepositInExecuteWithTypos() {
 
-		doAnswer(invocationOnMock -> {
-			Object[] args = invocationOnMock.getArguments();
-			Client client = (Client) args[0];
-			SavingAccount savingAccount = (SavingAccount) args[1];
-			client.setActiveAccount(savingAccount);
-			return null;
-		}).when(bankServiceMock).setActiveAccount(testClient, testSavingAccount);
+        doAnswer(invocationOnMock -> {
+            Object[] args = invocationOnMock.getArguments();
+            Client client = (Client) args[0];
+            SavingAccount savingAccount = (SavingAccount) args[1];
+            client.setActiveAccount(savingAccount);
+            return null;
+        }).when(bankServiceMock).setActiveAccount(testClient, testSavingAccount);
 
-		float amount = 1;
-		float negativeAmount = -1;
+        float amount = 1;
+        float negativeAmount = -1;
 
-		String input = "5" + "\r\n" + "0" + "\r\n" + negativeAmount + "\r\n" + amount + "\r\n";
-		System.setIn(new ByteArrayInputStream(input.getBytes()));
+        String input = "5" + "\r\n" + "0" + "\r\n" + negativeAmount + "\r\n" + amount + "\r\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-		sut.execute();
+        sut.execute();
 
-		assertEquals(SAVING_ACCOUNT_INITIAL_BALANCE + amount, testSavingAccount.getBalance(), 0.0f);
-	}
+        assertEquals(SAVING_ACCOUNT_INITIAL_BALANCE + amount, testSavingAccount.getBalance(), 0.0f);
+    }
 
-	// test printCommandInfo()
-	@Test
-	public void testPrintCommandInfo() {
-		final String EXPECTED_STRING = "Make a deposit";
+    // test printCommandInfo()
+    @Test
+    public void testPrintCommandInfo() {
+        final String EXPECTED_STRING = "Make a deposit";
 
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(byteArrayOutputStream));
-		sut.printCommandInfo();
-		final String printCommandInfoOutput = byteArrayOutputStream.toString();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(byteArrayOutputStream));
+        sut.printCommandInfo();
+        final String printCommandInfoOutput = byteArrayOutputStream.toString();
 
-		assertEquals("printCommandInfo() method does not produce the expected output",
-				EXPECTED_STRING, printCommandInfoOutput);
-	}
+        assertEquals("printCommandInfo() method does not produce the expected output",
+                EXPECTED_STRING, printCommandInfoOutput);
+    }
 
 }

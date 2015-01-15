@@ -14,35 +14,35 @@ import static org.joda.time.format.DateTimeFormat.mediumDateTime;
 
 public class ExitCommand implements Command {
 
-	private static final Logger CLIENTS_LOGGER = Logger.getLogger("LogClients." + ExitCommand.class.getName());
+    private static final Logger CLIENTS_LOGGER = Logger.getLogger("LogClients." + ExitCommand.class.getName());
 
-	@Override
-	public void execute() {
-		logDisconnectionTime();
-		System.exit(0);
-	}
+    @Override
+    public void execute() {
+        logDisconnectionTime();
+        System.exit(0);
+    }
 
-	private void logDisconnectionTime() {
-		DateTimeFormatter dateTimeFormatter = mediumDateTime();
-		PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
-				.appendDays()
-				.appendSuffix(" day", " days")
-				.appendSeparator(" ")
-				.appendHours()
-				.appendSeparator(":")
-				.appendMinutes().minimumPrintedDigits(2)
-				.appendSeparator(":")
-				.appendSeconds().minimumPrintedDigits(2)
-				.toFormatter();
-		DateTime disconnectionTime = new DateTime();
-		Period period = new Period(BankCommander.connectionTime, disconnectionTime);
-		CLIENTS_LOGGER.log(Level.INFO, "User disconnected from the Bank Commander" +
-				"\nDisconnection time: " + dateTimeFormatter.print(disconnectionTime)
-				+ "\nConnection duration: " + periodFormatter.print(period));
-	}
+    private void logDisconnectionTime() {
+        DateTimeFormatter dateTimeFormatter = mediumDateTime();
+        PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
+                .appendDays()
+                .appendSuffix(" day", " days")
+                .appendSeparator(" ")
+                .appendHours()
+                .appendSeparator(":")
+                .appendMinutes().minimumPrintedDigits(2)
+                .appendSeparator(":")
+                .appendSeconds().minimumPrintedDigits(2)
+                .toFormatter();
+        DateTime disconnectionTime = new DateTime();
+        Period period = new Period(BankCommander.connectionTime, disconnectionTime);
+        CLIENTS_LOGGER.log(Level.INFO, "User disconnected from the Bank Commander" +
+                "\nDisconnection time: " + dateTimeFormatter.print(disconnectionTime)
+                + "\nConnection duration: " + periodFormatter.print(period));
+    }
 
-	@Override
-	public void printCommandInfo() {
-		System.out.print("Exit");
-	}
+    @Override
+    public void printCommandInfo() {
+        System.out.print("Exit");
+    }
 }
